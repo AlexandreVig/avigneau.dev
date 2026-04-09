@@ -4,6 +4,15 @@
  */
 export async function renderMarkdown(source: string): Promise<string> {
   const { marked } = await import('marked');
+
+  marked.use({
+    renderer: {
+      link({ href, title, text }) {
+        return `<a href="${href}" target="_blank" rel="noreferrer">${title ? ` title="${title}>"` : ''}${text}</a>`;
+      }
+    }
+  });
+
   return marked.parse(source, { async: false }) as string;
 }
 
