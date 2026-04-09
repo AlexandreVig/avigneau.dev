@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- XP-style folder icon -->
+  <!-- Back panel -->
+  <rect x="2" y="14" width="44" height="30" rx="2" fill="#f5c842"/>
+  <!-- Tab -->
+  <rect x="2" y="10" width="16" height="6" rx="2" fill="#f5c842"/>
+  <!-- Front panel highlight -->
+  <rect x="2" y="16" width="44" height="28" rx="2" fill="#fdd835"/>
+  <!-- Shadow line -->
+  <rect x="2" y="16" width="44" height="2" fill="#e6b800" opacity="0.5"/>
+</svg>

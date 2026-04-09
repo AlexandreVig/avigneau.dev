@@ -1,0 +1,6 @@
+@import './reset.css';
+@import './variables.css';
+@import './desktop.css';
+@import './window.css';
+@import './taskbar.css';
+@import './start-menu.css';

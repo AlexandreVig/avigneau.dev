@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <!-- Windows XP 4-colour flag -->
+  <rect x="0" y="0" width="7" height="7" fill="#ff0000" rx="1"/>
+  <rect x="9" y="0" width="7" height="7" fill="#00b000" rx="1"/>
+  <rect x="0" y="9" width="7" height="7" fill="#0000ff" rx="1"/>
+  <rect x="9" y="9" width="7" height="7" fill="#ffa800" rx="1"/>
+</svg>

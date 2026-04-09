@@ -1,0 +1,55 @@
+---
+interface Props {
+  windowId: string;
+  label: string;
+  icon: string;
+}
+
+const { windowId, label, icon } = Astro.props;
+---
+
+<button
+  class="desktop-icon"
+  data-open-window={windowId}
+  aria-label={`Open ${label}`}
+>
+  <span class="desktop-icon__img-wrap">
+    <img src={icon} alt="" class="desktop-icon__img" aria-hidden="true" />
+    <span class="desktop-icon__img-overlay" aria-hidden="true"></span>
+  </span>
+  <span class="desktop-icon__label">{label}</span>
+</button>
+
+<script>
+  // Double-click → open window. Single-click → select.
+  const icons = document.querySelectorAll<HTMLElement>('.desktop-icon');
+
+  icons.forEach((icon) => {
+    let clickTimer: ReturnType<typeof setTimeout> | null = null;
+
+    icon.addEventListener('click', () => {
+      // Deselect all, select this one
+      icons.forEach((i) => i.classList.remove('is-selected'));
+      icon.classList.add('is-selected');
+
+      if (clickTimer) {
+        // Second click within 400ms = double-click
+        clearTimeout(clickTimer);
+        clickTimer = null;
+        const id = icon.dataset.openWindow!;
+        document.dispatchEvent(new CustomEvent('xp:open', { detail: { id } }));
+      } else {
+        clickTimer = setTimeout(() => {
+          clickTimer = null;
+        }, 400);
+      }
+    });
+  });
+
+  // Deselect icons when clicking on desktop background
+  document.getElementById('desktop')?.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('.desktop-icon')) {
+      icons.forEach((i) => i.classList.remove('is-selected'));
+    }
+  });
+</script>

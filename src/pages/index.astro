@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Desktop from '../components/Desktop.astro';
+---
+
+<BaseLayout>
+  <Desktop />
+</BaseLayout>
+
+<script>
+  import { windowManager } from '../lib/windowManager';
+  import { apps } from '../config/apps';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Register all apps with the window manager
+    apps.forEach((app) => windowManager.register(app));
+
+    // Route custom events → window manager
+    document.addEventListener('xp:open',     (e) => windowManager.open((e as CustomEvent).detail.id));
+    document.addEventListener('xp:close',    (e) => windowManager.close((e as CustomEvent).detail.id));
+    document.addEventListener('xp:minimize', (e) => windowManager.minimize((e as CustomEvent).detail.id));
+    document.addEventListener('xp:maximize', (e) => windowManager.maximize((e as CustomEvent).detail.id));
+    document.addEventListener('xp:restore',  (e) => windowManager.restore((e as CustomEvent).detail.id));
+    document.addEventListener('xp:focus',    (e) => windowManager.focus((e as CustomEvent).detail.id));
+  });
+</script>

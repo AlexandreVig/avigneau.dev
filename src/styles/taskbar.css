@@ -1,0 +1,162 @@
+/* ── Taskbar wrapper ────────────────────────────────────────────────────────── */
+#taskbar-wrapper {
+  flex-shrink: 0;
+  height: 30px;
+  background: var(--xp-taskbar);
+  position: relative;
+  z-index: 9999;
+}
+
+/* ── Taskbar layout ────────────────────────────────────────────────────────── */
+#taskbar {
+  display: flex;
+  height: 100%;
+  font-family: var(--xp-font);
+}
+
+.taskbar__left {
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.taskbar__right {
+  flex-shrink: 0;
+  background: var(--xp-tray);
+  border-left: 1px solid #1042af;
+  box-shadow: inset 1px 0 1px #18bbff;
+  padding: 0 10px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Start button ──────────────────────────────────────────────────────────── */
+#taskbar-start {
+  height: 100%;
+  margin-right: 10px;
+  cursor: default;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+#taskbar-start img {
+  height: 100%;
+  display: block;
+}
+
+#taskbar-start:hover {
+  filter: brightness(105%);
+}
+
+#taskbar-start:active {
+  filter: brightness(85%);
+}
+
+/* ── Window buttons area ───────────────────────────────────────────────────── */
+#taskbar-windows {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ── Window button ─────────────────────────────────────────────────────────── */
+.taskbar-win-btn {
+  flex: 1;
+  max-width: 150px;
+  color: #fff;
+  border-radius: 2px;
+  margin-top: 2px;
+  padding: 0 8px;
+  height: 22px;
+  font-size: 11px;
+  font-family: var(--xp-font);
+  background-color: #3c81f3;
+  box-shadow:
+    inset -1px 0px rgba(0, 0, 0, 0.3),
+    inset 1px 1px 1px rgba(255, 255, 255, 0.2);
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: default;
+  user-select: none;
+}
+
+.taskbar-win-btn img {
+  height: 15px;
+  width: 15px;
+  flex-shrink: 0;
+}
+
+.taskbar-win-btn span {
+  position: absolute;
+  left: 27px;
+  right: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Unfocused window button — white corner shine */
+.taskbar-win-btn::before {
+  display: block;
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  width: 10px;
+  height: 1px;
+  border-bottom-right-radius: 50%;
+  box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
+}
+
+.taskbar-win-btn:hover {
+  background-color: #53a3ff;
+}
+
+.taskbar-win-btn:hover:active {
+  background-color: #1e52b7;
+  box-shadow:
+    inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
+    inset 1px 0 1px rgba(0, 0, 0, 0.7);
+}
+
+/* ── Focused window button ─────────────────────────────────────────────────── */
+.taskbar-win-btn.is-active {
+  background-color: #1e52b7;
+  box-shadow:
+    inset 0 0 1px 1px rgba(0, 0, 0, 0.2),
+    inset 1px 0 1px rgba(0, 0, 0, 0.7);
+}
+
+.taskbar-win-btn.is-active::before {
+  display: none;
+}
+
+.taskbar-win-btn.is-active:hover {
+  background-color: #3576f3;
+}
+
+.taskbar-win-btn.is-active:hover:active {
+  background-color: #1e52b7;
+}
+
+/* ── System tray ───────────────────────────────────────────────────────────── */
+.tray__icon {
+  height: 15px;
+  width: 15px;
+}
+
+#taskbar-clock {
+  margin: 0 5px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: lighter;
+  text-shadow: none;
+}

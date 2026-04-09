@@ -1,0 +1,69 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  icon?: string;
+  width?: number;
+  height?: number;
+}
+
+const { id, title, icon, width = 400, height = 300 } = Astro.props;
+---
+
+<div
+  class="window"
+  data-window-id={id}
+  style={`width:${width}px; height:${height}px; display:none; flex-direction:column; position:absolute;`}
+  aria-hidden="true"
+>
+  <div class="header__bg"></div>
+  <div class="title-bar">
+    {
+      icon && (
+        <img src={icon} alt="" class="title-bar-icon" aria-hidden="true" />
+      )
+    }
+    <div class="title-bar-text">{title}</div>
+    <div class="title-bar-controls">
+      <button
+        aria-label="Minimize"
+        data-action="minimize"
+        data-window-target={id}></button>
+      <button
+        aria-label="Maximize"
+        data-action="maximize"
+        data-window-target={id}></button>
+      <button aria-label="Close" data-action="close" data-window-target={id}
+      ></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <slot />
+  </div>
+</div>
+
+<script>
+  // Delegate title-bar button clicks → xp:* custom events
+  document.addEventListener("click", (e) => {
+    const btn = (e.target as Element).closest<HTMLElement>(
+      "[data-action][data-window-target]",
+    );
+    if (!btn) return;
+    const action = btn.dataset.action as string;
+    const id = btn.dataset.windowTarget as string;
+    document.dispatchEvent(new CustomEvent(`xp:${action}`, { detail: { id } }));
+  });
+
+  // Double-click title bar → toggle maximize
+  document.addEventListener("dblclick", (e) => {
+    const titleBar = (e.target as Element).closest<HTMLElement>(".title-bar");
+    if (!titleBar) return;
+    // Don't trigger on buttons or icon
+    if ((e.target as Element).closest(".title-bar-controls")) return;
+    if ((e.target as Element).closest(".title-bar-icon")) return;
+    const win = titleBar.closest<HTMLElement>("[data-window-id]");
+    if (!win) return;
+    const id = win.dataset.windowId!;
+    document.dispatchEvent(new CustomEvent("xp:maximize", { detail: { id } }));
+  });
+</script>

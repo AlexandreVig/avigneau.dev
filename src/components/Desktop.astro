@@ -1,0 +1,30 @@
+---
+import { apps } from '../config/apps';
+import DesktopIcon from './DesktopIcon.astro';
+import Window from './Window.astro';
+---
+
+<div id="desktop" role="main" aria-label="Desktop">
+  <!-- Desktop icons grid -->
+  <div id="desktop-icons" aria-label="Desktop icons">
+    {apps.map((app) => (
+      <DesktopIcon windowId={app.id} label={app.title} icon={app.icon} />
+    ))}
+  </div>
+
+  <!-- Windows (all rendered, hidden until opened) -->
+  {apps.map((app) => (
+    <Window
+      id={app.id}
+      title={app.title}
+      icon={app.icon}
+      width={app.defaultWidth}
+      height={app.defaultHeight}
+    >
+      <div class="placeholder-content">
+        <h2>{app.title}</h2>
+        <p>Content for <strong>{app.id}</strong> goes here.</p>
+      </div>
+    </Window>
+  ))}
+</div>

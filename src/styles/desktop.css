@@ -1,0 +1,138 @@
+/* ── Desktop ────────────────────────────────────────────────────────────────── */
+#desktop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--xp-desktop-bg);
+  background-image: url('/wallpaper.jpg');
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* ── Desktop shell ─────────────────────────────────────────────────────────── */
+#desktop-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+#desktop-area {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+/* ── Desktop icons grid ────────────────────────────────────────────────────── */
+#desktop-icons {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px;
+  padding: 12px;
+  max-height: 100%;
+}
+
+/* ── Desktop icon ──────────────────────────────────────────────────────────── */
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 70px;
+  padding: 6px 4px;
+  border: none;
+  box-shadow: none;
+  background: none;
+  cursor: default;
+  border-radius: 0;
+  color: white;
+  text-align: center;
+}
+
+.desktop-icon:hover,
+.desktop-icon:active {
+  border: none;
+  box-shadow: none;
+  background: none;
+}
+
+.desktop-icon:focus {
+  outline: none;
+}
+
+.desktop-icon:focus-visible {
+  outline: 1px dotted white;
+}
+
+/* Icon image */
+.desktop-icon__img-wrap {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.desktop-icon__img {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  pointer-events: none;
+  display: block;
+}
+
+/* Blue tint overlay — hidden by default */
+.desktop-icon__img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(49, 106, 197, 0);
+  pointer-events: none;
+  transition: background 0.05s;
+}
+
+/* Selected: tint the icon */
+.desktop-icon.is-selected .desktop-icon__img {
+  opacity: 0.5;
+  filter: drop-shadow(0 0 blue);
+}
+
+.desktop-icon.is-selected .desktop-icon__img-overlay {
+  background: rgba(49, 106, 197, 0.55);
+  mix-blend-mode: multiply;
+}
+
+/* Label */
+.desktop-icon__label {
+  font-size: 10px;
+  font-family: var(--xp-font);
+  line-height: 1.3;
+  text-shadow: 0 1px 1px black;
+  pointer-events: none;
+  word-break: break-word;
+  padding: 0 2px;
+}
+
+/* Selected: highlight just the label */
+.desktop-icon.is-selected .desktop-icon__label {
+  background: #316ac5;
+  text-shadow: none;
+  border-radius: 1px;
+}
+
+/* ── Placeholder content ───────────────────────────────────────────────────── */
+.placeholder-content {
+  padding: 16px;
+  font-family: var(--xp-font);
+}
+
+.placeholder-content h2 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.placeholder-content p {
+  margin: 0;
+  font-size: 12px;
+}

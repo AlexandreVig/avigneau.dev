@@ -1,0 +1,101 @@
+---
+// No props — taskbar is always rendered once in the layout
+---
+
+<div id="taskbar" role="toolbar" aria-label="Taskbar">
+  <div class="taskbar__left">
+    <div id="taskbar-start" role="button" tabindex="0" aria-label="Start menu">
+      <img src="/icons/start.png" alt="Start" />
+    </div>
+
+    <!-- Window buttons — populated by JS -->
+    <div id="taskbar-windows" role="group" aria-label="Open windows"></div>
+  </div>
+
+  <div class="taskbar__right">
+    <span id="taskbar-clock" aria-live="polite"></span>
+  </div>
+</div>
+
+<script>
+  import type { WindowState } from "../lib/types";
+
+  // ── Clock ──────────────────────────────────────────────────────────────────
+  const clockEl = document.getElementById("taskbar-clock")!;
+
+  function getTime() {
+    const date = new Date();
+    let hour = date.getHours();
+    let hourPostFix = "AM";
+    let min: string | number = date.getMinutes();
+    if (hour >= 12) {
+      hour -= 12;
+      hourPostFix = "PM";
+    }
+    if (hour === 0) hour = 12;
+    if (min < 10) min = "0" + min;
+    return `${hour}:${min} ${hourPostFix}`;
+  }
+
+  function updateClock() {
+    clockEl.textContent = getTime();
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ── Window buttons ─────────────────────────────────────────────────────────
+  const windowsEl = document.getElementById("taskbar-windows")!;
+
+  document.addEventListener("xp:taskbar-update", (e) => {
+    const { windows: states, focusedId } = (
+      e as CustomEvent<{ windows: WindowState[]; focusedId: string | null }>
+    ).detail;
+    windowsEl.innerHTML = "";
+
+    states.forEach((state) => {
+      const btn = document.createElement("div");
+      btn.className = "taskbar-win-btn";
+      btn.setAttribute("role", "button");
+      btn.setAttribute("tabindex", "0");
+      btn.dataset.windowId = state.id;
+
+      if (state.icon) {
+        const img = document.createElement("img");
+        img.src = state.icon;
+        img.width = 15;
+        img.height = 15;
+        img.setAttribute("aria-hidden", "true");
+        btn.appendChild(img);
+      }
+
+      const label = document.createElement("span");
+      label.textContent = state.title;
+      btn.appendChild(label);
+
+      if (state.id === focusedId) btn.classList.add("is-active");
+
+      const handleClick = () => {
+        if (state.isMinimized) {
+          document.dispatchEvent(
+            new CustomEvent("xp:restore", { detail: { id: state.id } }),
+          );
+        } else if (state.id === focusedId) {
+          document.dispatchEvent(
+            new CustomEvent("xp:minimize", { detail: { id: state.id } }),
+          );
+        } else {
+          document.dispatchEvent(
+            new CustomEvent("xp:focus", { detail: { id: state.id } }),
+          );
+        }
+      };
+
+      btn.addEventListener("click", handleClick);
+      btn.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter" || ev.key === " ") handleClick();
+      });
+
+      windowsEl.appendChild(btn);
+    });
+  });
+</script>

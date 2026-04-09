@@ -1,0 +1,88 @@
+---
+import { apps } from '../config/apps';
+
+// Right pane items (decorative XP items)
+const rightItems = [
+  { icon: '/icons/folder-32.png', label: 'My Documents' },
+  { icon: '/icons/my-computer.png', label: 'My Computer' },
+  { icon: '/icons/control-panel.png', label: 'Control Panel' },
+  { icon: '/icons/help.png', label: 'Help and Support' },
+  { icon: '/icons/search.png', label: 'Search' },
+];
+---
+
+<div class="start-menu" id="start-menu">
+  <!-- Header -->
+  <div class="start-menu__header">
+    <img src="/icons/user.png" alt="" class="start-menu__avatar" />
+    <span class="start-menu__username">Alexandre</span>
+  </div>
+
+  <!-- Body -->
+  <div class="start-menu__body">
+    <!-- Left pane: portfolio apps -->
+    <div class="start-menu__left">
+      {apps.map((app) => (
+        <div class="start-menu__item" data-open-app={app.id}>
+          <img src={app.icon} alt="" class="start-menu__item-icon" />
+          <span class="start-menu__item-text">{app.title}</span>
+        </div>
+      ))}
+      <div style="flex: 1;"></div>
+    </div>
+
+    <!-- Right pane: XP-style items -->
+    <div class="start-menu__right">
+      {rightItems.map((item) => (
+        <div class="start-menu__item">
+          <img src={item.icon} alt="" class="start-menu__item-icon" />
+          <span class="start-menu__item-text">{item.label}</span>
+        </div>
+      ))}
+      <div class="start-menu__separator"></div>
+      <div class="start-menu__item">
+        <img src="/icons/connect.png" alt="" class="start-menu__item-icon" />
+        <span class="start-menu__item-text">Connect To</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="start-menu__footer">
+    <div class="start-menu__footer-btn">
+      <img src="/icons/logoff.png" alt="" />
+      <span>Log Off</span>
+    </div>
+    <div class="start-menu__footer-btn">
+      <img src="/icons/shutdown.png" alt="" />
+      <span>Turn Off</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const startBtn = document.getElementById('taskbar-start')!;
+  const startMenu = document.getElementById('start-menu')!;
+
+  // Toggle start menu
+  startBtn.addEventListener('mousedown', (e) => {
+    e.stopPropagation();
+    startMenu.classList.toggle('is-open');
+  });
+
+  // Close on click outside
+  window.addEventListener('mousedown', (e) => {
+    if (!startMenu.contains(e.target as Node) && !startBtn.contains(e.target as Node)) {
+      startMenu.classList.remove('is-open');
+    }
+  });
+
+  // Open app from start menu
+  startMenu.querySelectorAll<HTMLElement>('[data-open-app]').forEach((item) => {
+    item.addEventListener('click', () => {
+      const id = item.dataset.openApp!;
+      document.dispatchEvent(new CustomEvent('xp:open', { detail: { id } }));
+      startMenu.classList.remove('is-open');
+    });
+  });
+</script>
