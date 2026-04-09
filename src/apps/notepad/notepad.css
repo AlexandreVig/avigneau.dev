@@ -51,6 +51,13 @@
 .notepad__body h2 { font-size: 1.3em; }
 .notepad__body h3 { font-size: 1.1em; }
 
+/* Specific rule for first heading to avoid too much top margin when it's the first element */
+.notepad__body h1:first-child,
+.notepad__body h2:first-child,
+.notepad__body h3:first-child {
+  margin-top: 0;
+}
+
 .notepad__body p {
   margin: 0.5em 0;
 }
