@@ -2,8 +2,8 @@ name = "computer-portfolio"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat_v2"]
 
-# Cloudflare Pages config
-pages_build_output_dir = "dist"
+# Note: This project uses `@astrojs/cloudflare` (Workers runtime). Keeping this as a Workers project
+# avoids Cloudflare Pages' reserved `ASSETS` binding name, which otherwise causes `astro build` to fail.
 
 # Future bindings (KV, D1, etc.) go here
 # [[kv_namespaces]]
