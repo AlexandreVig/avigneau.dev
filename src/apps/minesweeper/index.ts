@@ -478,6 +478,7 @@ const mod: AppModule = {
 
       for (let i = 0; i < cells.length; i++) renderCell(i);
       updateFace(false);
+      document.dispatchEvent(new CustomEvent('xp:game-lose', { detail: { appId: 'minesweeper' } }));
     };
 
     const winGame = () => {
@@ -492,6 +493,7 @@ const mod: AppModule = {
       setDigits(mineDigitImgs, 0);
       for (let i = 0; i < cells.length; i++) renderCell(i);
       updateFace(false);
+      document.dispatchEvent(new CustomEvent('xp:game-win', { detail: { appId: 'minesweeper' } }));
     };
 
     const openIndex = (index: number) => {

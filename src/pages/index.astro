@@ -14,10 +14,14 @@ import Desktop from "../components/Desktop.astro";
   import { apps } from "../apps/registry";
   import { windowManager } from "../lib/windowManager";
   import { launch } from "../shell/launcher";
+  import { initClippy } from "../lib/clippy/clippy";
 
   document.addEventListener("DOMContentLoaded", () => {
     // Wire the app content lifecycle.
     appHost.init(apps);
+
+    // Clippy assistant
+    initClippy();
 
     // Shell launcher entry point — every opening action flows through here.
     document.addEventListener("xp:launch", (e) => {

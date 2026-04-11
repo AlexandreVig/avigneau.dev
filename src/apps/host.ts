@@ -88,6 +88,11 @@ class AppHost {
     if (this.loading.has(instanceId)) return;
     this.loading.add(instanceId);
 
+    // Notify listeners (e.g. Clippy) that an app is being launched.
+    document.dispatchEvent(
+      new CustomEvent('xp:app-launch', { detail: { appId: req.appId } }),
+    );
+
     try {
       const mod = await manifest.loader();
 

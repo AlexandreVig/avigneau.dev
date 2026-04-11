@@ -1,0 +1,25 @@
+/* ── Clippy overlay ────────────────────────────────────────────────────────── */
+#clippy-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 6000;
+  pointer-events: auto;
+  cursor: var(--xp-cursor-default);
+  user-select: none;
+  will-change: transform;
+}
+
+#clippy-overlay.is-walking {
+  transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+}
+
+#clippy-overlay.is-dragging {
+  transition: none;
+}
+
+#clippy-sprite {
+  display: block;
+  pointer-events: none;
+  image-rendering: auto;
+}
