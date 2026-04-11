@@ -1,6 +1,6 @@
 # About Me
 
-Hi, I'm **Alexandre Vigneau**. I'm a French software engineering student, currently a
+Hi, I'm **Alexandre Vigneau**. I'm a French computer science student, currently a
 long way from home.
 
 I'm in my 4th year at **Epitech Lyon**, spending the 2025–2026 academic year

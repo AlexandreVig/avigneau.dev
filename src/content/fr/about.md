@@ -1,6 +1,6 @@
 # À propos de moi
 
-Salut, je suis **Alexandre Vigneau**. Je suis étudiant en ingénierie logicielle,
+Salut, je suis **Alexandre Vigneau**. Je suis étudiant en informatique,
 actuellement loin de chez moi.
 
 Je suis en 4ème année à **Epitech Lyon**, et je passe l'année universitaire
