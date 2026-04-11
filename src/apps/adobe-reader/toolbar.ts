@@ -19,6 +19,12 @@ export interface ToolbarControls {
 
 const ZOOM_PRESETS = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
+function setPageInputWidth(input: HTMLInputElement): void {
+  const len = input.value.length;
+  // use ch to get a rough width estimate, with some padding
+  input.style.width = `${Math.min(2 + len, 10)}ch`;
+}
+
 export function createToolbar(cb: ToolbarCallbacks): ToolbarControls {
   const toolbar = document.createElement('div');
   toolbar.className = 'ar__toolbar';
@@ -55,6 +61,11 @@ export function createToolbar(cb: ToolbarCallbacks): ToolbarControls {
   pageInput.className = 'ar__page-input';
   pageInput.type = 'text';
   pageInput.value = '1';
+  setPageInputWidth(pageInput);
+  // When page input value changes, update width to fit content (up to a max)
+  pageInput.addEventListener('input', () => {
+    setPageInputWidth(pageInput);
+  });
 
   const ofSpan = document.createElement('span');
   ofSpan.className = 'ar__page-label';
@@ -137,6 +148,7 @@ export function createToolbar(cb: ToolbarCallbacks): ToolbarControls {
     element: toolbar,
     setPage(current: number, total: number) {
       pageInput.value = String(current);
+      setPageInputWidth(pageInput);
       ofSpan.textContent = t('reader.pageLabelLimit', total);
     },
     setZoom(value: number) {
