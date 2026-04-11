@@ -428,7 +428,7 @@ const mod: AppModule = {
           src = misflaggedUrl;
           break;
         default:
-          src = '';
+          src = numberCellUrl(Math.max(0, c.minesAround));
       }
       img.src = src;
     };

@@ -152,7 +152,6 @@
 .ar__btn--icon img {
   width: 16px;
   height: 16px;
-  image-rendering: pixelated;
 }
 
 .ar__page-input {
