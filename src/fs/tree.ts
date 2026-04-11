@@ -93,6 +93,13 @@ export const root: FolderNode = {
           desktopPosition: { row: 5, col: 1 },
         },
         {
+          kind: 'shortcut',
+          name: 'Minesweeper',
+          icon: '/icons/minesweeper/mine-icon.png',
+          target: { appId: 'minesweeper' },
+          desktopPosition: { row: 6, col: 1 },
+        },
+        {
           kind: 'file',
           name: 'Resume.pdf',
           ext: '.pdf',

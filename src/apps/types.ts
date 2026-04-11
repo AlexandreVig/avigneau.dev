@@ -69,5 +69,6 @@ export interface AppInstance {
 export interface AppHostAPI {
   setTitle(title: string): void;
   setIcon(icon: string): void;
+  setSize(width: number, height: number): void;
   close(): void;
 }

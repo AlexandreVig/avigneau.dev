@@ -191,6 +191,13 @@ const en: Record<string, string> = {
     'A Windows XP\u2013style PDF reader, built as part of this portfolio. ' +
     'Source on [GitHub](https://github.com/AlexandreVig/alexvig.dev).',
   'reader.about.footer': 'Built with Astro, TypeScript and PDF.js.',
+
+
+  // ── Minesweeper ───────────────────────────────────────────────────────────────
+  'minesweeper.about.description':
+      'A recreation of the classic Minesweeper game, styled like the Windows XP original. ' +
+      'Built as part of this portfolio. Source on [GitHub](https://github.com/AlexandreVig/alexvig.dev).',
+  'minesweeper.about.footer': 'Built with Astro and TypeScript.',
 };
 
 export default en;

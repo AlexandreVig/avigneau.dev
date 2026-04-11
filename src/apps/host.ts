@@ -121,6 +121,7 @@ class AppHost {
       const api: AppHostAPI = {
         setTitle: (t) => windowManager.setTitle(instanceId, t),
         setIcon: (i) => windowManager.setIcon(instanceId, i),
+        setSize: (w, h) => windowManager.setSize(instanceId, w, h),
         close: () =>
           document.dispatchEvent(
             new CustomEvent('xp:close', { detail: { id: instanceId } }),

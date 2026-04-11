@@ -93,4 +93,15 @@ export const apps: AppManifest[] = [
     showInTaskbar: false,
     loader: () => import('./bsod'),
   },
+  {
+    id: 'minesweeper',
+    title: 'Minesweeper',
+    icon: '/icons/minesweeper/mine-icon.png',
+    defaultWidth: 220,
+    defaultHeight: 260,
+    kind: 'singleton',
+    showInStartMenu: true,
+    resizable: false,
+    loader: () => import('./minesweeper'),
+  },
 ];

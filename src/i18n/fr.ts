@@ -192,6 +192,12 @@ const fr: Record<string, string> = {
     'Un lecteur PDF fa\u00e7on Adobe Reader, int\u00e9gr\u00e9 \u00e0 ce portfolio. ' +
     'Source sur [GitHub](https://github.com/AlexandreVig/alexvig.dev).',
   'reader.about.footer': 'Con\u00e7u avec Astro, TypeScript et PDF.js.',
+
+  // ── Minesweeper ───────────────────────────────────────────────────────────────
+  'minesweeper.about.description':
+    'Une recr\u00e9ation de D\u00e9mineur fa\u00e7on Windows XP, int\u00e9gr\u00e9e \u00e0 ce portfolio. ' +
+    'Source sur [GitHub](https://github.com/AlexandreVig/alexvig.dev).',
+  'minesweeper.about.footer': 'Con\u00e7u avec Astro et TypeScript.',
 };
 
 export default fr;

@@ -146,6 +146,18 @@ class WindowManager {
     this.syncTaskbar();
   }
 
+  /** Programmatically resize a window (content-box width/height). */
+  setSize(id: string, width: number, height: number): void {
+    const state = this.windows.get(id);
+    if (!state || !state.isOpen) return;
+    if (!Number.isFinite(width) || !Number.isFinite(height)) return;
+    if (state.isMaximized) return;
+
+    state.width = Math.max(0, Math.ceil(width));
+    state.height = Math.max(0, Math.ceil(height));
+    this.applyState(id);
+  }
+
   getState(id: string): WindowState | undefined {
     return this.windows.get(id);
   }

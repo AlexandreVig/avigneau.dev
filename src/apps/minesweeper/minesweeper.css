@@ -1,0 +1,217 @@
+.window-body.minesweeper {
+  overflow: visible;
+}
+
+.minesweeper {
+  user-select: none;
+  font-family: var(--xp-font);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: rgb(236, 233, 216);
+  box-sizing: border-box;
+}
+
+.minesweeper__menu {
+  display: flex;
+  align-items: stretch;
+  height: 20px;
+  padding: 1px 2px 0;
+  border-bottom: 1px solid #ffffff;
+  background: #ece9d8;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  user-select: none;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+  width: fit-content;
+}
+
+.minesweeper__menu-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 7px;
+  cursor: default;
+  color: #000;
+}
+
+.minesweeper__menu-label:hover,
+.minesweeper__menu-label--active {
+  background: #1660e8;
+  color: #fff;
+}
+
+.minesweeper__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid #808080;
+  box-shadow: 2px 2px 1px rgba(100, 100, 100, 0.6);
+  padding: 2px;
+  color: #000;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  font-weight: normal;
+  z-index: 10;
+  cursor: default;
+}
+
+.minesweeper__dropdown-row {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  height: 18px;
+  padding: 0 2px;
+}
+
+.minesweeper__dropdown-row:hover {
+  background: #316ac5;
+  color: #fff;
+}
+
+.minesweeper__dropdown-row--disabled {
+  color: #8c8c8c;
+}
+
+.minesweeper__dropdown-row--disabled:hover {
+  background: transparent;
+  color: #8c8c8c;
+}
+
+.minesweeper__dropdown-check {
+  text-align: center;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.minesweeper__dropdown-text {
+  white-space: nowrap;
+}
+
+.minesweeper__dropdown-separator {
+  height: 1px;
+  background: #aca899;
+  margin: 3px 1px;
+}
+
+.minesweeper__frame {
+  background-color: rgb(192, 192, 192);
+  border-left: rgb(245, 245, 245) solid 3px;
+  border-top: rgb(245, 245, 245) solid 3px;
+  border-right: rgb(128, 128, 128) solid 3px;
+  border-bottom: rgb(128, 128, 128) solid 3px;
+  padding: 5px;
+}
+
+.minesweeper__scorebar {
+  height: 34px;
+  border-radius: 1px;
+  border-top: rgb(128, 128, 128) solid 2px;
+  border-left: rgb(128, 128, 128) solid 2px;
+  border-right: rgb(245, 245, 245) solid 2px;
+  border-bottom: rgb(245, 245, 245) solid 2px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 7px 3px 4px;
+  box-sizing: border-box;
+}
+
+.minesweeper__digits {
+  width: 40px;
+  height: 24px;
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0;
+}
+
+.minesweeper__digits img {
+  width: 13px;
+  height: 23px;
+  display: block;
+  pointer-events: none;
+}
+
+.minesweeper__faceOuter {
+  width: 24px;
+  height: 24px;
+  border-top: 1px solid rgb(128, 128, 128);
+  border-left: 1px solid rgb(128, 128, 128);
+  border-radius: 2px;
+  transform: translateX(1px);
+}
+
+.minesweeper__face {
+  border-radius: 2px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(192, 192, 192);
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(245, 245, 245) rgb(128, 128, 128) rgb(128, 128, 128)
+    rgb(245, 245, 245);
+  outline: none;
+  padding: 0;
+}
+
+.minesweeper__face:active {
+  border-width: 1px;
+  border-color: rgb(128, 128, 128);
+}
+
+.minesweeper__face img {
+  width: 24px;
+  height: 24px;
+  pointer-events: none;
+}
+
+.minesweeper__grid {
+  display: grid;
+  border-top: rgb(128, 128, 128) solid 3px;
+  border-left: rgb(128, 128, 128) solid 3px;
+  border-right: rgb(245, 245, 245) solid 3px;
+  border-bottom: rgb(245, 245, 245) solid 3px;
+}
+
+.minesweeper__cell {
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+
+.minesweeper__cellBg {
+  position: absolute;
+  inset: 0;
+}
+
+.minesweeper__cellBg--cover {
+  border-left: rgb(245, 245, 245) solid 2px;
+  border-top: rgb(245, 245, 245) solid 2px;
+  border-right: rgb(128, 128, 128) solid 2px;
+  border-bottom: rgb(128, 128, 128) solid 2px;
+}
+
+.minesweeper__cellBg--open {
+  border-left: rgb(128, 128, 128) solid 1px;
+  border-top: rgb(128, 128, 128) solid 1px;
+}
+
+.minesweeper__cellContent {
+  position: absolute;
+  inset: 0;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
