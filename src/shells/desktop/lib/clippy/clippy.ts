@@ -20,6 +20,7 @@ const LAUNCH_ANIMATION_MAP: Record<string, string[]> = {
 let engine: AnimationEngine;
 let movement: MovementController;
 let overlay: HTMLElement;
+let initialized = false;
 
 let idleTimeoutId: number | undefined;
 let lastActivityTime = Date.now();
@@ -199,6 +200,9 @@ function setupEventListeners(): void {
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 export function initClippy(): void {
+  if (initialized) return;
+  initialized = true;
+
   const { overlay: el, sprite } = createDOM();
   overlay = el;
 

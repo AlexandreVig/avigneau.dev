@@ -16,14 +16,6 @@ class WindowManager {
 
   /** Creates a new window DOM node, inserts it into #desktop, wires interactions. */
   create(opts: CreateWindowOptions): HTMLElement {
-    if (this.windows.has(opts.instanceId)) {
-      // Shouldn't happen — caller should check .has() first and restore/focus.
-      const existing = document.querySelector<HTMLElement>(
-        `[data-window-id="${CSS.escape(opts.instanceId)}"] .window-body`,
-      );
-      if (existing) return existing;
-    }
-
     const x = opts.x ?? CASCADE_BASE_X + (this.cascadeIndex % 8) * CASCADE_STEP;
     const y = opts.y ?? CASCADE_BASE_Y + (this.cascadeIndex % 8) * CASCADE_STEP;
     this.cascadeIndex++;

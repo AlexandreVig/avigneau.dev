@@ -125,7 +125,9 @@ const mod: AppModule = {
     root.addEventListener(
       'click',
       (e) => {
-        const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-action]');
+        const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+          'button[data-action]',
+        );
         if (!btn || btn.disabled) return;
         const action = btn.dataset.action;
         if (action === 'create-mail') openCompose();

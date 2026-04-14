@@ -532,7 +532,7 @@ const mod: AppModule = {
       if (flags !== c.minesAround) return;
 
       const mineIndex = neighbors.find((i) => cells[i].minesAround < 0 && cells[i].state !== 'flag');
-      if (typeof mineIndex === 'number' && mineIndex !== -1) {
+      if (mineIndex !== undefined) {
         gameOver(mineIndex);
         return;
       }
