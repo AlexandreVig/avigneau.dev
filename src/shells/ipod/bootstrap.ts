@@ -80,7 +80,12 @@ function patchI18n(root: HTMLElement): void {
     const key = el.dataset.i18n;
     if (!key) return;
     const value = t(key as Parameters<typeof t>[0]);
-    el.textContent = value;
+
+    // Only replace visible text for leaf elements.
+    // Some components (e.g. app icons) put `data-i18n` on a container
+    // element that also contains children like <img>; clobbering
+    // `textContent` would wipe those nodes.
+    if (el.childElementCount === 0) el.textContent = value;
     if (el.hasAttribute('aria-label')) el.setAttribute('aria-label', value);
   });
 }

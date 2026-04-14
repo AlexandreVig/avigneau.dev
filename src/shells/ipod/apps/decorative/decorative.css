@@ -3,20 +3,21 @@
  * Darkened scrim with a centered iOS 1 UIAlertView-style dialog.
  */
 
-.ipod-decorative {
+#ipod-shell .ipod-app-root.ipod-decorative {
   background: #1b1b1f;
   color: #fff;
   font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  overflow: hidden;
 }
 
 .ipod-decorative__scrim {
-  min-height: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   box-sizing: border-box;
-  background: rgba(0, 0, 0, 0.5);
+  background: #7f7f7f;
 }
 
 .ipod-decorative__alert {

@@ -152,13 +152,20 @@ export class IpodNavigator {
    * `goHome` path and the loader/mount error paths in `openApp`.
    */
   private async tearDown(screen: Extract<IpodScreen, { kind: 'app' }>): Promise<void> {
-    // Signal first so any signal-bound listeners are gone before the
-    // app's own `unmount` hook runs and before we tear down the DOM.
+    // Start the exit animation immediately so the user gets instant feedback.
+    // We intentionally keep the app's DOM in place until the frame is fully
+    // off-screen to avoid a "white flash" during the slide-down.
+    const exited = screen.frame.playExit();
+
+    // Signal early so signal-bound listeners and in-flight work stop while the
+    // animation runs, but don't tear down the UI until it's no longer visible.
     try {
       screen.abort.abort();
     } catch (err) {
       console.warn('[ipod/navigator] abort failed', err);
     }
+
+    await exited;
 
     try {
       screen.instance?.unmount?.();
@@ -166,7 +173,6 @@ export class IpodNavigator {
       console.error(`[ipod/navigator] "${screen.manifest.id}".unmount() threw`, err);
     }
 
-    await screen.frame.playExit();
     screen.frame.element.remove();
 
     // Pop only if it's still the top — defensive in case something

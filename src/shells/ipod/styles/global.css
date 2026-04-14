@@ -12,6 +12,11 @@
 #ipod-shell {
   position: fixed;
   inset: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Prefer dynamic viewport units on mobile browsers when supported. */
+  width: 100dvw;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   background: #000;
@@ -19,6 +24,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   font-size: 14px;
   overflow: hidden;
+  overscroll-behavior: none;
   cursor: auto;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -88,6 +94,7 @@
 #ipod-shell .ipod-app-frame.entering,
 #ipod-shell .ipod-app-frame.exiting {
   transform: translateY(100%);
+  pointer-events: none;
 }
 
 #ipod-shell .ipod-nav-bar {
