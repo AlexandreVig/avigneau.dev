@@ -1,0 +1,101 @@
+/* Shared XP-style application menubar + dropdown panel.
+   Used by notepad, explorer, outlook, adobe-reader, minesweeper. */
+
+.xp-menubar {
+  display: flex;
+  align-items: stretch;
+  height: 20px;
+  padding: 1px 2px 0;
+  border-bottom: 1px solid #ffffff;
+  background: #ece9d8;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  user-select: none;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+}
+
+.xp-menubar-label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 7px;
+  cursor: default;
+  color: #000;
+}
+
+.xp-menubar-label:hover,
+.xp-menubar-label--active {
+  background: #1660e8;
+  color: #fff;
+}
+
+.xp-menubar-logo {
+  margin-left: auto;
+  height: 100%;
+  border-left: 1px solid #fff;
+}
+
+/* Dropdown panel */
+.xp-menubar-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: #fff;
+  border: 1px solid #808080;
+  box-shadow: 2px 2px 1px rgba(100, 100, 100, 0.6);
+  padding: 2px;
+  color: #000;
+  font-family: Tahoma, sans-serif;
+  font-size: 11px;
+  font-weight: normal;
+  z-index: 10;
+  cursor: default;
+}
+
+.xp-menubar-dropdown-row {
+  display: grid;
+  grid-template-columns: 18px 1fr auto 12px;
+  align-items: center;
+  height: 18px;
+  padding: 0 2px;
+}
+
+.xp-menubar-dropdown-row:hover {
+  background: #316ac5;
+  color: #fff;
+}
+
+.xp-menubar-dropdown-row--disabled {
+  color: #8c8c8c;
+}
+
+.xp-menubar-dropdown-row--disabled:hover {
+  background: transparent;
+  color: #8c8c8c;
+}
+
+.xp-menubar-dropdown-check {
+  text-align: center;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.xp-menubar-dropdown-text {
+  padding-right: 20px;
+  white-space: nowrap;
+}
+
+.xp-menubar-dropdown-hotkey {
+  padding-right: 4px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.xp-menubar-dropdown-separator {
+  height: 1px;
+  background: #aca899;
+  margin: 3px 1px;
+}

@@ -15,9 +15,7 @@ const mod: AppModule = {
 
     root.classList.add('outlook');
     root.innerHTML = `
-      <div class="outlook__menubar">
-        <div class="outlook__menu-host"></div>
-      </div>
+      <div class="outlook__menu-slot"></div>
 
       <div class="outlook__toolbar">
         <button class="outlook__tbtn" data-action="create-mail">
@@ -94,8 +92,8 @@ const mod: AppModule = {
     `;
 
     // ── Menu bar ──────────────────────────────────────────────────────────
-    const menuHost = root.querySelector<HTMLElement>('.outlook__menu-host')!;
-    menuHost.appendChild(
+    const menuSlot = root.querySelector<HTMLElement>('.outlook__menu-slot')!;
+    menuSlot.replaceWith(
       createMenu(
         {
           onAction: (action) => {

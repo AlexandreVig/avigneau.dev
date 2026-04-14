@@ -22,10 +22,7 @@ const mod: AppModule = {
 
     root.classList.add('explorer');
     root.innerHTML = `
-      <div class="explorer__menubar">
-        <div class="explorer__menu-host"></div>
-        <img class="explorer__menubar-logo" src="/icons/explorer/windows.png" alt="" />
-      </div>
+      <div class="explorer__menu-slot"></div>
 
       <div class="explorer__toolbar">
         <button class="explorer__tbtn" data-action="back" disabled>
@@ -73,10 +70,11 @@ const mod: AppModule = {
       <div class="explorer__status"></div>
     `;
 
-    const menuHost = root.querySelector<HTMLElement>('.explorer__menu-host')!;
-    menuHost.appendChild(
+    const menuSlot = root.querySelector<HTMLElement>('.explorer__menu-slot')!;
+    menuSlot.replaceWith(
       createMenu(
         {
+          logo: { src: '/icons/explorer/windows.png' },
           onAction: (action) => {
             if (action === 'exit') host.close();
             else if (action === 'refresh') render();

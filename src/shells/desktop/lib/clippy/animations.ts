@@ -6,7 +6,7 @@ export interface ClippyAnimation {
   length: number;
 }
 
-export const SPRITE_URL = '/clippy/map.png';
+export const SPRITE_URL = '/clippy/map.webp';
 export const FRAME_W = 124;
 export const FRAME_H = 93;
 

@@ -4,7 +4,7 @@
   width: 100%;
   height: 100%;
   background-color: var(--xp-desktop-bg);
-  background-image: url('/wallpaper.jpg');
+  background-image: url('/wallpaper.webp');
   background-size: cover;
   background-position: center;
   overflow: hidden;
