@@ -6,8 +6,8 @@
  * back-slash-separated segments for everything else (e.g. "My Documents\Projects").
  */
 
-import { resolve, root } from '../../../../fs/api';
-import type { FsNode } from '../../../../fs/types';
+import { resolve, root } from '../../fs/api';
+import type { FsNode } from '../../fs/types';
 
 const MY_COMPUTER = 'My Computer';
 

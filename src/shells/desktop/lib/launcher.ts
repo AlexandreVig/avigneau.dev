@@ -1,6 +1,6 @@
 import { appHost } from '../apps/host';
-import { readFile, resolve } from '../../../fs/api';
-import type { FileHandle } from '../../../fs/types';
+import { readFile, resolve } from '../fs/api';
+import type { FileHandle } from '../fs/types';
 import { getFileType } from './fileTypes';
 
 export interface LaunchRequest {

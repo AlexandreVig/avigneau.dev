@@ -1,4 +1,4 @@
-import { getLocale } from '../i18n';
+import { getLocale } from '../../../i18n';
 import type { FolderNode } from './types';
 
 export const root: FolderNode = {
@@ -60,8 +60,8 @@ export const root: FolderNode = {
           desktopPosition: { row: 1, col: 2 },
           load: () =>
             getLocale() === 'fr'
-              ? import('../content/fr/about.md?raw').then((m) => m.default)
-              : import('../content/about.md?raw').then((m) => m.default),
+              ? import('../../../content/fr/about.md?raw').then((m) => m.default)
+              : import('../../../content/about.md?raw').then((m) => m.default),
         },
         {
           kind: 'file',
@@ -71,8 +71,8 @@ export const root: FolderNode = {
           desktopPosition: { row: 2, col: 2 },
           load: () =>
             getLocale() === 'fr'
-              ? import('../content/fr/skills.md?raw').then((m) => m.default)
-              : import('../content/skills.md?raw').then((m) => m.default),
+              ? import('../../../content/fr/skills.md?raw').then((m) => m.default)
+              : import('../../../content/skills.md?raw').then((m) => m.default),
         },
         {
           kind: 'file',
@@ -82,8 +82,8 @@ export const root: FolderNode = {
           desktopPosition: { row: 3, col: 2 },
           load: () =>
             getLocale() === 'fr'
-              ? import('../content/fr/contact.md?raw').then((m) => m.default)
-              : import('../content/contact.md?raw').then((m) => m.default),
+              ? import('../../../content/fr/contact.md?raw').then((m) => m.default)
+              : import('../../../content/contact.md?raw').then((m) => m.default),
         },
         {
           kind: 'shortcut',
@@ -124,8 +124,8 @@ export const root: FolderNode = {
               ext: '.md',
               load: () =>
                 getLocale() === 'fr'
-                  ? import('../content/fr/projects/portfolio.md?raw').then((m) => m.default)
-                  : import('../content/projects/portfolio.md?raw').then((m) => m.default),
+                  ? import('../../../content/fr/projects/portfolio.md?raw').then((m) => m.default)
+                  : import('../../../content/projects/portfolio.md?raw').then((m) => m.default),
             },
           ],
         },
@@ -136,8 +136,8 @@ export const root: FolderNode = {
           ext: '.md',
           load: () =>
             getLocale() === 'fr'
-              ? import('../content/fr/skills.md?raw').then((m) => m.default)
-              : import('../content/skills.md?raw').then((m) => m.default),
+              ? import('../../../content/fr/skills.md?raw').then((m) => m.default)
+              : import('../../../content/skills.md?raw').then((m) => m.default),
         },
         {
           kind: 'file',
@@ -146,8 +146,8 @@ export const root: FolderNode = {
           ext: '.md',
           load: () =>
             getLocale() === 'fr'
-              ? import('../content/fr/contact.md?raw').then((m) => m.default)
-              : import('../content/contact.md?raw').then((m) => m.default),
+              ? import('../../../content/fr/contact.md?raw').then((m) => m.default)
+              : import('../../../content/contact.md?raw').then((m) => m.default),
         },
         {
           kind: 'file',
@@ -156,8 +156,8 @@ export const root: FolderNode = {
           ext: '.md',
           load: () =>
             getLocale() === 'fr'
-              ? import('../content/fr/about.md?raw').then((m) => m.default)
-              : import('../content/about.md?raw').then((m) => m.default),
+              ? import('../../../content/fr/about.md?raw').then((m) => m.default)
+              : import('../../../content/about.md?raw').then((m) => m.default),
         },
         {
           kind: 'file',

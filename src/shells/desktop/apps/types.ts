@@ -5,7 +5,7 @@ import type {
   BaseAppModule,
   BaseAppMountContext,
 } from '../../../core/types';
-import type { FileHandle } from '../../../fs/types';
+import type { FileHandle } from '../fs/types';
 import type { WindowControl } from '../lib/types';
 
 export type AppKind = 'singleton' | 'document' | 'multi';

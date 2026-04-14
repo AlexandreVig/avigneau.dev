@@ -1,5 +1,5 @@
-import { iconForNode, listChildren, parentPath, pathOf, resolve } from '../../../../fs/api';
-import type { FsNode } from '../../../../fs/types';
+import { iconForNode, listChildren, parentPath, pathOf, resolve } from '../../fs/api';
+import type { FsNode } from '../../fs/types';
 import {
   buildLocationTree,
   displayPathFor,

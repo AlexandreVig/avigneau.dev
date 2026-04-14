@@ -1,4 +1,4 @@
-import type { FileHandle } from '../../../fs/types';
+import type { FileHandle } from '../fs/types';
 import { windowManager } from '../lib/windowManager';
 import type {
   AppHostAPI,
