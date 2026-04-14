@@ -81,7 +81,7 @@ function patchI18n(root: HTMLElement): void {
   root.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
     const key = el.dataset.i18n;
     if (!key) return;
-    const value = t(key);
+    const value = t(key as Parameters<typeof t>[0]);
     el.textContent = value;
     if (el.hasAttribute('aria-label')) el.setAttribute('aria-label', value);
   });

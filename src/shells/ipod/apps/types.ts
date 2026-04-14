@@ -42,5 +42,5 @@ export interface IpodAppManifest extends BaseAppManifest<IpodAppModule> {
    * used during SSR; the client patches home-screen labels to `t(titleKey)`
    * after hydration.
    */
-  titleKey?: string;
+  titleKey?: import('../../../i18n').I18nKey;
 }

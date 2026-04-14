@@ -1,4 +1,6 @@
-const fr: Record<string, string> = {
+import type { I18nKey } from './en';
+
+const fr: Record<I18nKey, string> = {
   // ── Explorer ────────────────────────────────────────────────────────────────
   'explorer.empty': 'Ce dossier est vide.',
   'explorer.items.one': '{0} \u00e9l\u00e9ment',

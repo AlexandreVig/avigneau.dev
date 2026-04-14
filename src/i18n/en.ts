@@ -1,4 +1,4 @@
-const en: Record<string, string> = {
+const en = {
   // ── Explorer ────────────────────────────────────────────────────────────────
   'explorer.empty': 'This folder is empty.',
   'explorer.items.one': '{0} item',
@@ -246,6 +246,7 @@ const en: Record<string, string> = {
   'ipod.decorative.alertBody':
     'A connection to the server could not be established.',
   'ipod.decorative.ok': 'OK',
-};
+} as const;
 
 export default en;
+export type I18nKey = keyof typeof en;
