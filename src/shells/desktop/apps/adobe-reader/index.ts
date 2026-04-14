@@ -161,8 +161,38 @@ const mod: AppModule = {
     // Load PDF
     const loadingTask = pdfjsLib.getDocument(pdfUrl);
     signal.addEventListener('abort', () => loadingTask.destroy(), { once: true });
-    pdfDoc = await loadingTask.promise;
-    if (signal.aborted) return;
+
+    // Always return an AppInstance so appHost can tear us down even if the
+    // user closes the window while the PDF is still loading. Previous code
+    // did a bare `return` on abort, which dropped the reference to
+    // loadingTask and left the DOM/worker alive until GC.
+    const instance: AppInstance = {
+      unmount() {
+        observer?.disconnect();
+        if (resizeTimer) clearTimeout(resizeTimer);
+        loadingTask.destroy();
+        root.classList.remove('adobe-reader');
+        root.innerHTML = '';
+        pdfDoc = null;
+      },
+      onResize() {
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          if (zoomMode === 'fit-width' || zoomMode === 'fit-page') {
+            void applyZoom();
+          }
+        }, 100);
+      },
+    };
+
+    try {
+      pdfDoc = await loadingTask.promise;
+    } catch {
+      // Destroyed by signal abort, or genuine load failure. Return the
+      // instance so appHost can still call unmount() if the window lingers.
+      return instance;
+    }
+    if (signal.aborted) return instance;
     totalPages = pdfDoc.numPages;
 
     pageContainer.innerHTML = '';
@@ -316,25 +346,6 @@ const mod: AppModule = {
       },
       { signal, passive: true },
     );
-
-    const instance: AppInstance = {
-      unmount() {
-        observer?.disconnect();
-        if (resizeTimer) clearTimeout(resizeTimer);
-        loadingTask.destroy();
-        root.classList.remove('adobe-reader');
-        root.innerHTML = '';
-        pdfDoc = null;
-      },
-      onResize() {
-        if (resizeTimer) clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          if (zoomMode === 'fit-width' || zoomMode === 'fit-page') {
-            void applyZoom();
-          }
-        }, 100);
-      },
-    };
 
     return instance;
   },
