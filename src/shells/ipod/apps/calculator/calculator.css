@@ -1,0 +1,67 @@
+/*
+ * iPod Calculator — iOS 1 basic calc.
+ * Black body, silver digit keys, orange operator column.
+ */
+
+.ipod-calculator {
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  color: #fff;
+  font-family: 'Helvetica Neue', -apple-system, sans-serif;
+}
+
+.ipod-calculator__screen {
+  flex-shrink: 0;
+  height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+  font-size: 54px;
+  font-weight: 300;
+  letter-spacing: -1px;
+  background: #000;
+  color: #fff;
+  overflow: hidden;
+}
+
+.ipod-calculator__keys {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: #2a2a2a;
+  padding: 1px;
+}
+
+.ipod-calculator .key {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  background: linear-gradient(to bottom, #5d5d5d 0%, #2a2a2a 100%);
+  color: #fff;
+  font: inherit;
+  font-size: 22px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6);
+}
+.ipod-calculator .key:active {
+  filter: brightness(1.4);
+}
+
+.ipod-calculator .key--fn {
+  background: linear-gradient(to bottom, #8a8a8a 0%, #4e4e4e 100%);
+  font-size: 20px;
+}
+
+.ipod-calculator .key--op {
+  background: linear-gradient(to bottom, #ffb74d 0%, #e8892a 100%);
+  color: #fff;
+  font-weight: 500;
+}
+
+.ipod-calculator .key--wide {
+  grid-column: span 2;
+}

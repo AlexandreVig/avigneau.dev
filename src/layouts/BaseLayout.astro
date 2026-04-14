@@ -1,8 +1,20 @@
 ---
-import "../styles/global.css";
-import Taskbar from "../components/Taskbar.astro";
-import StartMenu from "../components/StartMenu.astro";
-
+/**
+ * Shell-agnostic page scaffolding: <html>, <head>, <body>, locale bootstrap,
+ * and the synchronous shell-detection script.
+ *
+ * Contains no shell-specific markup or CSS. Both the desktop shell
+ * (src/shells/desktop/DesktopShell.astro) and the iPod shell
+ * (src/shells/ipod/IpodShell.astro) are rendered into the <slot/> here.
+ *
+ * Shell selection is a two-stage handshake:
+ *   1. The inline <script> below runs synchronously in <head> and sets
+ *      `html[data-shell="desktop"|"ipod"]` before any paint. The inline
+ *      <style> below hides the losing shell via CSS so there is no FOUC.
+ *   2. A module <script> in `src/pages/index.astro` reads the same
+ *      dataset value, removes the losing shell's DOM, and dynamically
+ *      imports only the winning shell's bootstrap.
+ */
 interface Props {
   title?: string;
 }
@@ -14,20 +26,49 @@ const { title = "Alexandre's Computer" } = Astro.props;
 <html lang="en" data-default-lang>
   <head>
     <script is:inline>
-      (function() {
+      // Locale bootstrap — must run before body paints so we don't flash EN.
+      (function () {
         var l = localStorage.getItem('xp-locale');
         if (l === 'fr') {
           document.documentElement.lang = 'fr';
         } else if (l === 'en') {
           document.documentElement.lang = 'en';
-        } else if (navigator.language && navigator.language.slice(0, 2).toLowerCase() === 'fr') {
+        } else if (
+          navigator.language &&
+          navigator.language.slice(0, 2).toLowerCase() === 'fr'
+        ) {
           document.documentElement.lang = 'fr';
         }
         document.documentElement.removeAttribute('data-default-lang');
       })();
     </script>
+    <script is:inline>
+      // Shell selection — must run before body paints so we don't flash the
+      // wrong shell. Matches the mobile breakpoint in the module chooser
+      // (src/pages/index.astro). Keep them in sync if either is changed.
+      (function () {
+        var isMobile =
+          window.matchMedia('(max-width: 768px)').matches ||
+          (window.matchMedia('(pointer: coarse)').matches &&
+            window.innerWidth < 1024);
+        document.documentElement.dataset.shell = isMobile ? 'ipod' : 'desktop';
+      })();
+    </script>
+    <style is:global>
+      /*
+       * Hide the losing shell via CSS the instant <html>'s `data-shell`
+       * attribute is set. Prevents any frame where both shells are visible.
+       * The module chooser later removes the losing shell's DOM entirely.
+       */
+      html[data-shell='desktop'] #ipod-shell {
+        display: none !important;
+      }
+      html[data-shell='ipod'] #desktop-shell {
+        display: none !important;
+      }
+    </style>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
       content="Alexandre's portfolio — Windows XP edition"
@@ -36,14 +77,6 @@ const { title = "Alexandre's Computer" } = Astro.props;
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   </head>
   <body>
-    <div id="desktop-shell">
-      <div id="desktop-area">
-        <slot />
-      </div>
-      <div id="taskbar-wrapper">
-        <StartMenu />
-        <Taskbar />
-      </div>
-    </div>
+    <slot />
   </body>
 </html>

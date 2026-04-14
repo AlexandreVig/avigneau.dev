@@ -1,4 +1,4 @@
-import { getFileType } from '../shell/fileTypes';
+import { getFileType } from '../shells/desktop/lib/fileTypes';
 import { root } from './tree';
 import type { FileHandle, FileNode, FolderNode, FsNode } from './types';
 

@@ -1,0 +1,128 @@
+/*
+ * iPod Mail — compose screen.
+ * Styled as a stack of iOS 1 grouped-table rows with inline inputs.
+ */
+
+.ipod-mail {
+  background: #c5c7cc;
+  color: #000;
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  /* Fill the surrounding .ipod-app-root so the form's flex layout has
+     a concrete height to share between the fixed fields and the
+     stretchy message textarea. */
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.ipod-mail__form {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 1px;
+}
+
+.ipod-mail__field {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 8px 12px;
+  border-bottom: 1px solid #a8aab0;
+}
+.ipod-mail__field:first-of-type {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* The message field eats the remaining vertical space in the form so
+   the textarea inside it can stretch. `min-height: 0` is required or
+   flex would refuse to shrink below the textarea's intrinsic height. */
+.ipod-mail__field--grow {
+  flex: 1 1 0;
+  min-height: 0;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 0 0 8px 8px;
+  border-bottom: 0;
+  padding: 10px 12px;
+}
+.ipod-mail__field--grow .ipod-mail__label {
+  margin-bottom: 6px;
+}
+
+.ipod-mail__label {
+  width: 68px;
+  font-size: 14px;
+  color: #6b6e75;
+  font-weight: 600;
+}
+
+.ipod-mail__field input,
+.ipod-mail__field textarea {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 15px;
+  color: #000;
+  resize: none;
+  min-height: 22px;
+  -webkit-user-select: text;
+  user-select: text;
+}
+.ipod-mail__field textarea {
+  /* Fill the stretchy .ipod-mail__field--grow parent instead of a
+     fixed min-height. min-height: 0 lets it collapse on very short
+     viewports without forcing the whole form to overflow. */
+  flex: 1 1 0;
+  min-height: 0;
+  line-height: 1.4;
+}
+
+.ipod-mail__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.ipod-mail__status {
+  flex-shrink: 0;
+  margin-top: 10px;
+  min-height: 18px;
+  font-size: 13px;
+  color: #2b4f8a;
+  text-align: center;
+}
+.ipod-mail__status--error {
+  color: #b92020;
+}
+
+.ipod-mail__send {
+  flex-shrink: 0;
+  margin-top: 10px;
+  appearance: none;
+  border: 1px solid #1a2a3f;
+  border-radius: 6px;
+  background: linear-gradient(to bottom, #8ca5c6 0%, #5878a0 50%, #415f85 100%);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  height: 40px;
+  cursor: pointer;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+.ipod-mail__send:active {
+  filter: brightness(0.85);
+}
+.ipod-mail__send:disabled {
+  opacity: 0.55;
+  cursor: default;
+}

@@ -1,0 +1,143 @@
+/*
+ * iPod Notes — legal-pad styling inspired by iOS 1 Notes.
+ * Scoped under `.ipod-notes` so the rules can't leak onto other apps.
+ */
+
+.ipod-notes {
+  background: #fff8d8;
+  font-family: 'Marker Felt', 'Noteworthy', 'Comic Sans MS', cursive;
+  color: #1a1a1a;
+}
+
+.ipod-notes__page {
+  background: #FCF997;
+  background: radial-gradient(circle, rgba(252, 249, 151, 1) 0%, rgba(254, 252, 205, 1) 100%);
+  padding: 14px 20px 40px;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.ipod-notes__header {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #c4a868;
+}
+
+.ipod-notes__body {
+  font-size: 15px;
+  line-height: 28px;
+}
+
+.ipod-notes__body h2 {
+  font-size: 17px;
+  margin: 18px 0 6px;
+}
+.ipod-notes__body h3 {
+  font-size: 16px;
+  margin: 14px 0 4px;
+}
+.ipod-notes__body p,
+.ipod-notes__body ul,
+.ipod-notes__body ol {
+  margin: 0 0 12px;
+}
+.ipod-notes__body ul {
+  padding-left: 20px;
+}
+.ipod-notes__body a {
+  color: #1a56aa;
+  text-decoration: underline;
+}
+.ipod-notes__body strong {
+  font-weight: 700;
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * Screen wrapper — hosts either the list view or the detail page.
+ * Single scroll container so scroll position resets cleanly when the
+ * view swaps between list and note.
+ * ---------------------------------------------------------------------------
+ */
+
+.ipod-notes__screen {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- List view --- */
+
+.ipod-notes__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff8d8;
+  /* Kill the legal-pad font on the list itself — list rows read better
+     in the system font. The detail page re-applies the cursive look. */
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+}
+
+.ipod-notes__list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #d3bf7a;
+  cursor: pointer;
+}
+.ipod-notes__list-row:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.ipod-notes__list-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.ipod-notes__list-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ipod-notes__list-snippet {
+  font-size: 12px;
+  color: #6b5f30;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ipod-notes__list-chev {
+  flex-shrink: 0;
+  font-size: 22px;
+  color: #9b884a;
+  line-height: 1;
+}
+
+/* --- Detail view back button --- */
+
+.ipod-notes__back {
+  appearance: none;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 4px 10px 4px 8px;
+  border: 1px solid #b49b4f;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  color: #1a56aa;
+  font: inherit;
+  font-size: 13px;
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  cursor: pointer;
+}
+.ipod-notes__back:active {
+  filter: brightness(0.92);
+}

@@ -1,0 +1,62 @@
+/*
+ * Decorative app — "Cannot connect to server" alert.
+ * Darkened scrim with a centered iOS 1 UIAlertView-style dialog.
+ */
+
+.ipod-decorative {
+  background: #1b1b1f;
+  color: #fff;
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+}
+
+.ipod-decorative__scrim {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.ipod-decorative__alert {
+  width: 100%;
+  max-width: 260px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #5a5a64 0%, #2b2b33 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  padding: 14px 14px 10px;
+  text-align: center;
+}
+
+.ipod-decorative__alert-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.ipod-decorative__alert-body {
+  font-size: 13px;
+  color: #d5d7e0;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.ipod-decorative__alert-ok {
+  appearance: none;
+  width: 100%;
+  height: 34px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  background: linear-gradient(to bottom, #8ca5c6 0%, #5878a0 50%, #415f85 100%);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+.ipod-decorative__alert-ok:active {
+  filter: brightness(0.85);
+}

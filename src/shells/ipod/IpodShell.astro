@@ -1,0 +1,21 @@
+---
+/**
+ * Root component for the iPod Touch 1G mobile shell.
+ *
+ * Renders the status bar above the home screen (icon grid + dock). Apps
+ * open on top of this via the navigator in Step 7 (not yet wired).
+ *
+ * Mounted from `src/pages/index.astro` as the mobile alternative to the
+ * desktop shell. Both shells are SSR'd; the inline detection script in
+ * BaseLayout picks which one is visible, and the module-script chooser
+ * removes the loser's DOM + dynamic-imports the winner's bootstrap.
+ */
+import "./styles/global.css";
+import StatusBar from "./components/StatusBar.astro";
+import HomeScreen from "./components/HomeScreen.astro";
+---
+
+<div id="ipod-shell">
+  <StatusBar />
+  <HomeScreen />
+</div>

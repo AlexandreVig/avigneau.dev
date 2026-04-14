@@ -57,7 +57,7 @@ export async function launch(req: LaunchRequest): Promise<void> {
 
   if (req.path) {
     const node = resolve(req.path);
-    if (node?.kind === 'file') {
+    if (node?.kind === "file") {
       file = await readFile(req.path);
     }
   }
@@ -103,13 +103,13 @@ sur le bureau pendant le glissement pour empêcher le contenu de type iframe
 d'avaler les événements souris en plein glissement.
 
 ```ts
-el.addEventListener('mousedown', (e) => {
-  const titleBar = (e.target as Element).closest('.title-bar');
+el.addEventListener("mousedown", (e) => {
+  const titleBar = (e.target as Element).closest(".title-bar");
   if (titleBar && !isButton && !state.isMaximized) {
     isDragging = true;
     document.body.appendChild(cover); // overlay anti-capture
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
   }
 });
 ```
@@ -128,4 +128,4 @@ se charge tant que vous ne le demandez pas.
 
 ## Source
 
-[github.com/AlexandreVig/computer-portfolio](https://github.com/AlexandreVig/computer-portfolio)
+[github.com/AlexandreVig/avigneau.dev](https://github.com/AlexandreVig/avigneau.dev)

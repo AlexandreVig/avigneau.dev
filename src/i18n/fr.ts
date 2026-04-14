@@ -198,6 +198,54 @@ const fr: Record<string, string> = {
     'Une recr\u00e9ation de D\u00e9mineur fa\u00e7on Windows XP, int\u00e9gr\u00e9e \u00e0 ce portfolio. ' +
     'Source sur [GitHub](https://github.com/AlexandreVig/alexvig.dev).',
   'minesweeper.about.footer': 'Con\u00e7u avec Astro et TypeScript.',
+
+  // ── iPod ────────────────────────────────────────────────────────────────────
+  'ipod.app.safari': 'Safari',
+  'ipod.app.mail': 'Mail',
+  'ipod.app.notes': 'Notes',
+  'ipod.app.music': 'Musique',
+  'ipod.app.calculator': 'Calculette',
+  'ipod.app.weather': 'M\u00e9t\u00e9o',
+  'ipod.app.stocks': 'Bourse',
+  'ipod.app.maps': 'Plans',
+  'ipod.app.youtube': 'YouTube',
+
+  'ipod.nav.home': 'Accueil',
+  'ipod.common.loading': 'Chargement\u2026',
+  'ipod.common.loadFailed': 'Impossible de charger le contenu.',
+
+  'ipod.safari.bookmarks': 'Signets',
+  'ipod.safari.errorTitle': 'Safari ne peut pas ouvrir la page.',
+  'ipod.safari.errorBody': 'Le serveur ne r\u00e9pond plus.',
+  'ipod.safari.project.portfolio.title': 'Site portfolio',
+  'ipod.safari.project.portfolio.description':
+    'Ce site \u2014 un bureau Windows XP dans le navigateur.',
+
+  'ipod.notes.back': '\u2039 Notes',
+  'ipod.notes.items.about.title': '\u00c0 propos',
+  'ipod.notes.items.about.snippet':
+    'Qui je suis, ce sur quoi je travaille, et mes centres d\u2019int\u00e9r\u00eat.',
+  'ipod.notes.items.skills.title': 'Comp\u00e9tences',
+  'ipod.notes.items.skills.snippet':
+    'Langages, frameworks, infra, r\u00e9seau, s\u00e9curit\u00e9, IA.',
+
+  'ipod.mail.title': 'Nouveau message',
+  'ipod.mail.field.from': 'De',
+  'ipod.mail.field.email': 'E-mail',
+  'ipod.mail.field.subject': 'Objet',
+  'ipod.mail.field.message': 'Message',
+  'ipod.mail.send': 'Envoyer',
+  'ipod.mail.placeholder.message': 'Dites bonjour\u2026',
+
+  'ipod.music.nowPlaying': 'En cours de lecture',
+  'ipod.music.backToList': '\u2039 Retour \u00e0 la liste',
+
+  'ipod.calculator.error': 'Erreur',
+
+  'ipod.decorative.alertTitle': 'Impossible de se connecter au serveur',
+  'ipod.decorative.alertBody':
+    'La connexion au serveur n\u2019a pas pu \u00eatre \u00e9tablie.',
+  'ipod.decorative.ok': 'OK',
 };
 
 export default fr;

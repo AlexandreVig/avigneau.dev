@@ -26,4 +26,4 @@ pnpm-debug.log*
 
 .wrangler/
 
-winXP/
+extracted_assets/

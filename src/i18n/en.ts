@@ -198,6 +198,54 @@ const en: Record<string, string> = {
       'A recreation of the classic Minesweeper game, styled like the Windows XP original. ' +
       'Built as part of this portfolio. Source on [GitHub](https://github.com/AlexandreVig/alexvig.dev).',
   'minesweeper.about.footer': 'Built with Astro and TypeScript.',
+
+  // ── iPod ────────────────────────────────────────────────────────────────────
+  'ipod.app.safari': 'Safari',
+  'ipod.app.mail': 'Mail',
+  'ipod.app.notes': 'Notes',
+  'ipod.app.music': 'Music',
+  'ipod.app.calculator': 'Calculator',
+  'ipod.app.weather': 'Weather',
+  'ipod.app.stocks': 'Stocks',
+  'ipod.app.maps': 'Maps',
+  'ipod.app.youtube': 'YouTube',
+
+  'ipod.nav.home': 'Home',
+  'ipod.common.loading': 'Loading\u2026',
+  'ipod.common.loadFailed': 'Could not load content.',
+
+  'ipod.safari.bookmarks': 'Bookmarks',
+  'ipod.safari.errorTitle': "Safari can't open the page.",
+  'ipod.safari.errorBody': 'The server stopped responding.',
+  'ipod.safari.project.portfolio.title': 'Portfolio Website',
+  'ipod.safari.project.portfolio.description':
+    'This site \u2014 a Windows XP desktop shell in the browser.',
+
+  'ipod.notes.back': '\u2039 Notes',
+  'ipod.notes.items.about.title': 'About Me',
+  'ipod.notes.items.about.snippet':
+    "Who I am, what I'm working on, and what I'm into.",
+  'ipod.notes.items.skills.title': 'Skills',
+  'ipod.notes.items.skills.snippet':
+    'Languages, frameworks, infra, networking, security, AI.',
+
+  'ipod.mail.title': 'New Message',
+  'ipod.mail.field.from': 'From',
+  'ipod.mail.field.email': 'Email',
+  'ipod.mail.field.subject': 'Subject',
+  'ipod.mail.field.message': 'Message',
+  'ipod.mail.send': 'Send',
+  'ipod.mail.placeholder.message': 'Say hi\u2026',
+
+  'ipod.music.nowPlaying': 'Now Playing',
+  'ipod.music.backToList': '\u2039 Back to List',
+
+  'ipod.calculator.error': 'Error',
+
+  'ipod.decorative.alertTitle': 'Cannot Connect to Server',
+  'ipod.decorative.alertBody':
+    'A connection to the server could not be established.',
+  'ipod.decorative.ok': 'OK',
 };
 
 export default en;

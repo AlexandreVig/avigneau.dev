@@ -39,7 +39,7 @@ a lot about architecture and optimisation.
 I'm wrapping up the year at SFSU and looking for my next internship:
 **14 Sep 2026 → 25 Feb 2027**, alternating 3 days a week at a company and
 2 days at Epitech. **Full-stack** roles preferred, frontend, backend, or
-both. **Internship**, **CDI** or **CDD**. If that lines up with something you're hiring for, open **Outlook** on the desktop and send me a message!
+both. **Internship**, **CDI** or **CDD**. If that lines up with something you're hiring for, open **the mail app** and send me a message!
 
 ## Off-keyboard
 

@@ -1,0 +1,26 @@
+---
+/**
+ * Root component for the Windows XP desktop shell.
+ *
+ * Owns the entire desktop surface: the wallpaper/icons area, the taskbar,
+ * and the start menu. Imports the XP theme CSS bundle as a side effect so
+ * that when this component is not rendered (i.e. on mobile), none of the
+ * desktop styling is included.
+ *
+ * Mounted from `src/pages/index.astro` as one of two alternate shells.
+ */
+import "./styles/global.css";
+import Desktop from "./components/Desktop.astro";
+import Taskbar from "./components/Taskbar.astro";
+import StartMenu from "./components/StartMenu.astro";
+---
+
+<div id="desktop-shell">
+  <div id="desktop-area">
+    <Desktop />
+  </div>
+  <div id="taskbar-wrapper">
+    <StartMenu />
+    <Taskbar />
+  </div>
+</div>

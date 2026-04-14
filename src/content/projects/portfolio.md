@@ -54,7 +54,7 @@ export async function launch(req: LaunchRequest): Promise<void> {
 
   if (req.path) {
     const node = resolve(req.path);
-    if (node?.kind === 'file') {
+    if (node?.kind === "file") {
       file = await readFile(req.path);
     }
   }
@@ -97,13 +97,13 @@ deltas on `window`. A transparent cover div is injected over the desktop during 
 drag to prevent iframe-like content from swallowing mouse events mid-drag.
 
 ```ts
-el.addEventListener('mousedown', (e) => {
-  const titleBar = (e.target as Element).closest('.title-bar');
+el.addEventListener("mousedown", (e) => {
+  const titleBar = (e.target as Element).closest(".title-bar");
   if (titleBar && !isButton && !state.isMaximized) {
     isDragging = true;
     document.body.appendChild(cover); // swallow-proof overlay
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
   }
 });
 ```
@@ -121,4 +121,4 @@ own chunk too — nothing loads until you ask for it.
 
 ## Source
 
-[github.com/AlexandreVig/computer-portfolio](https://github.com/AlexandreVig/computer-portfolio)
+[github.com/AlexandreVig/avigneau.dev](https://github.com/AlexandreVig/avigneau.dev)

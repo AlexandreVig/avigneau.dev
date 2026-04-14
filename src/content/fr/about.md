@@ -42,7 +42,7 @@ Je termine mon année à SFSU et je cherche mon prochain stage :
 **14 Sep 2026 → 25 Fév 2027**, en alternance 3 jours par semaine en
 entreprise et 2 jours à Epitech. Postes **full-stack** de préférence,
 frontend, backend, ou les deux. Contrat **stage**, **CDI** ou **CDD**. Si ça correspond à ce que vous cherchez,
-ouvrez **Outlook** sur le bureau et envoyez-moi un message !
+ouvrez **les mails** et envoyez-moi un message !
 
 ## En dehors du clavier
 

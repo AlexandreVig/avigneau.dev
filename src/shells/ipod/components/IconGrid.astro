@@ -1,0 +1,38 @@
+---
+/**
+ * Home-screen icon grid.
+ *
+ * Reads the iPod registry, keeps only apps with `location === 'home'`,
+ * sorts by `order`, and renders them in a 4-column grid matching the
+ * iPod Touch 1G home layout.
+ */
+import { ipodApps } from '../apps/registry';
+import AppIcon from './AppIcon.astro';
+
+const homeApps = ipodApps
+  .filter((a) => a.location === 'home')
+  .sort((a, b) => a.order - b.order);
+---
+
+<div class="ipod-icon-grid">
+  {
+    homeApps.map((app) => (
+      <AppIcon id={app.id} title={app.title} titleKey={app.titleKey} icon={app.icon} />
+    ))
+  }
+</div>
+
+<style>
+  .ipod-icon-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* Rows auto-size to icon + label height. */
+    grid-auto-rows: min-content;
+    row-gap: 20px;
+    column-gap: 0;
+    padding: 20px 16px 0;
+    justify-items: center;
+    align-content: start;
+  }
+</style>

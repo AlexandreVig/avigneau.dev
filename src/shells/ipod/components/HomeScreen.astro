@@ -1,0 +1,25 @@
+---
+/**
+ * iPod Touch 1G home screen.
+ *
+ * Wraps the wallpaper, icon grid, and pinned dock. Wallpaper is the
+ * extracted iOS 1 firmware asset at `public/ipod/wallpaper.png`.
+ */
+import IconGrid from "./IconGrid.astro";
+import Dock from "./Dock.astro";
+---
+
+<div class="ipod-home">
+  <IconGrid />
+  <Dock />
+</div>
+
+<style>
+  .ipod-home {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: #000;
+  }
+</style>

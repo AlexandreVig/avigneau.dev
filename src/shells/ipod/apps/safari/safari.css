@@ -1,0 +1,207 @@
+/*
+ * iPod Safari — mobile browser styling. A fake URL bar on top and a
+ * rendered-markdown "web page" below.
+ */
+
+.ipod-safari {
+  display: flex;
+  flex-direction: column;
+  background: #e3e6ec;
+  color: #000;
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+}
+
+.ipod-safari__urlbar {
+  flex-shrink: 0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  background: linear-gradient(to bottom, #dfe3ea 0%, #b8bec9 100%);
+  border-bottom: 1px solid #6b7280;
+  font-size: 12px;
+}
+
+.ipod-safari__nav-back {
+  appearance: none;
+  margin: 0;
+  /* Nudge the `‹` glyph up: it sits on the baseline so plain flex
+     centering still looks bottom-heavy inside a 22px button. The small
+     padding-bottom pulls the optical center back to the middle. */
+  padding: 0 0 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid #6b7280;
+  background: linear-gradient(to bottom, #f3f5f9 0%, #c9cfda 100%);
+  color: #1a56aa;
+  font: inherit;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.ipod-safari__nav-back[hidden] {
+  display: none;
+}
+.ipod-safari__nav-back:active {
+  filter: brightness(0.9);
+}
+
+.ipod-safari__lock {
+  font-size: 11px;
+}
+
+.ipod-safari__url {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #9097a3;
+  border-radius: 4px;
+  padding: 3px 8px;
+  line-height: 16px;
+  color: #222;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.ipod-safari__viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+}
+
+.ipod-safari__loading,
+.ipod-safari__error {
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+.ipod-safari__error p {
+  margin: 6px 0 0;
+}
+
+/* --- Bookmarks list --- */
+
+.ipod-safari__bookmarks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+.ipod-safari__bookmark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #d5d7dc;
+  cursor: pointer;
+}
+.ipod-safari__bookmark:active {
+  background: #d0dff4;
+}
+
+.ipod-safari__bookmark-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: linear-gradient(to bottom, #f3f5f9 0%, #c9cfda 100%);
+  border: 1px solid #9097a3;
+}
+
+.ipod-safari__bookmark-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.ipod-safari__bookmark-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ipod-safari__bookmark-desc {
+  font-size: 12px;
+  color: #6b6e75;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ipod-safari__bookmark-chev {
+  flex-shrink: 0;
+  font-size: 22px;
+  color: #9097a3;
+  line-height: 1;
+}
+
+/* --- Rendered project page --- */
+
+.ipod-safari__page {
+  padding: 16px 16px 40px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #111;
+}
+
+.ipod-safari__page h1 {
+  font-size: 22px;
+  margin: 0 0 12px;
+}
+.ipod-safari__page h2 {
+  font-size: 18px;
+  margin: 18px 0 8px;
+}
+.ipod-safari__page h3 {
+  font-size: 16px;
+  margin: 14px 0 6px;
+}
+.ipod-safari__page p,
+.ipod-safari__page ul,
+.ipod-safari__page ol {
+  margin: 0 0 12px;
+}
+.ipod-safari__page ul {
+  padding-left: 22px;
+}
+.ipod-safari__page a {
+  color: #1a56aa;
+  text-decoration: underline;
+}
+.ipod-safari__page code {
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 13px;
+  background: #f1f1f4;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.ipod-safari__page pre {
+  background: #1e1e26;
+  color: #e8e8ea;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.ipod-safari__page pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}

@@ -1,0 +1,77 @@
+---
+/**
+ * A single tappable iOS 1 home-screen / dock icon.
+ *
+ * Pure presentation + a `data-app-id` hook that the delegated click listener
+ * in `shells/ipod/bootstrap.ts` uses to dispatch an `ipod:launch` event.
+ *
+ * Used by IconGrid (home) and Dock. Sizing/positioning is left to the parent
+ * so the same component works in either layout.
+ */
+interface Props {
+  id: string;
+  title: string;
+  icon: string;
+  /** i18n key — when present, emitted as `data-i18n` for client-side patching. */
+  titleKey?: string;
+  /** Hide the label (used in the dock). */
+  hideLabel?: boolean;
+}
+
+const { id, title, icon, titleKey, hideLabel = false } = Astro.props;
+---
+
+<button
+  type="button"
+  class="ipod-app-icon"
+  data-app-id={id}
+  aria-label={title}
+  data-i18n={titleKey}
+>
+  <img src={icon} alt="" draggable={false} />
+  {!hideLabel && <span class="label" data-i18n={titleKey}>{title}</span>}
+</button>
+
+<style>
+  .ipod-app-icon {
+    /* Strip every default button style — this is just a tap target. */
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ipod-app-icon img {
+    width: 57px;
+    height: 57px;
+    border-radius: 12px;
+    /* Soft iOS 1 drop shadow under each icon. */
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+    pointer-events: none;
+  }
+
+  .ipod-app-icon .label {
+    font-size: 11px;
+    line-height: 1;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    max-width: 72px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ipod-app-icon:active img {
+    opacity: 0.6;
+  }
+</style>

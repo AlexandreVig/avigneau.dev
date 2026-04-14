@@ -1,0 +1,155 @@
+---
+// No props — taskbar is always rendered once in the layout
+---
+
+<div id="taskbar" role="toolbar" aria-label="Taskbar">
+  <div class="taskbar__left">
+    <div id="taskbar-start" role="button" tabindex="0" aria-label="Start menu">
+      <img src="/icons/start.png" alt="Start" />
+    </div>
+
+    <!-- Window buttons — populated by JS -->
+    <div id="taskbar-windows" role="group" aria-label="Open windows"></div>
+  </div>
+
+  <div class="tray__lang" id="tray-lang">
+    <button class="tray__lang-btn" id="tray-lang-btn" type="button">EN</button>
+    <div class="tray__lang-dropdown" id="tray-lang-dropdown">
+      <div class="tray__lang-option" data-locale="fr">
+        <span class="tray__lang-check"></span>
+        <span class="tray__lang-code">FR</span>
+        <span class="tray__lang-name">French (France)</span>
+      </div>
+      <div class="tray__lang-option" data-locale="en">
+        <span class="tray__lang-check"></span>
+        <span class="tray__lang-code">EN</span>
+        <span class="tray__lang-name">English (United States)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="taskbar__right">
+    <span id="taskbar-clock" aria-live="polite"></span>
+  </div>
+</div>
+
+<script>
+  import type { WindowState } from "../lib/types";
+  import { getLocale, setLocale } from "../../../i18n";
+
+  // ── Language switcher ──────────────────────────────────────────────────────
+  const langBtn = document.getElementById("tray-lang-btn")!;
+  const langDropdown = document.getElementById("tray-lang-dropdown")!;
+  const langOptions =
+    langDropdown.querySelectorAll<HTMLElement>(".tray__lang-option");
+
+  const locale = getLocale();
+  langBtn.textContent = locale.toUpperCase();
+
+  langOptions.forEach((opt) => {
+    const check = opt.querySelector(".tray__lang-check")!;
+    if (opt.dataset.locale === locale) check.textContent = "\u2713";
+    opt.addEventListener("click", () => {
+      const target = opt.dataset.locale;
+      if (target === "en" || target === "fr") setLocale(target);
+    });
+  });
+
+  langBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    langDropdown.classList.toggle("is-open");
+  });
+
+  window.addEventListener("mousedown", (e) => {
+    if (!(e.target as HTMLElement).closest("#tray-lang")) {
+      langDropdown.classList.remove("is-open");
+    }
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") langDropdown.classList.remove("is-open");
+  });
+
+  // ── Clock ──────────────────────────────────────────────────────────────────
+  const clockEl = document.getElementById("taskbar-clock")!;
+  const isFr = locale === "fr";
+
+  function getTime() {
+    const date = new Date();
+    const hour = date.getHours();
+    let min: string | number = date.getMinutes();
+    if (min < 10) min = "0" + min;
+
+    if (isFr) {
+      return `${hour}:${min}`;
+    }
+
+    let h12 = hour % 12;
+    if (h12 === 0) h12 = 12;
+    return `${h12}:${min} ${hour >= 12 ? "PM" : "AM"}`;
+  }
+
+  function updateClock() {
+    const time = getTime();
+    if (clockEl.textContent !== time) clockEl.textContent = time;
+  }
+  updateClock();
+  const clockInterval = setInterval(updateClock, 1000);
+  document.addEventListener('astro:before-swap', () => clearInterval(clockInterval), { once: true });
+
+  // ── Window buttons ─────────────────────────────────────────────────────────
+  const windowsEl = document.getElementById("taskbar-windows")!;
+
+  document.addEventListener("xp:taskbar-update", (e) => {
+    const { windows: states, focusedId } = (
+      e as CustomEvent<{ windows: WindowState[]; focusedId: string | null }>
+    ).detail;
+    windowsEl.innerHTML = "";
+
+    states.forEach((state) => {
+      const btn = document.createElement("div");
+      btn.className = "taskbar-win-btn";
+      btn.setAttribute("role", "button");
+      btn.setAttribute("tabindex", "0");
+      btn.dataset.windowId = state.id;
+
+      if (state.icon) {
+        const img = document.createElement("img");
+        img.src = state.icon;
+        img.width = 15;
+        img.height = 15;
+        img.setAttribute("aria-hidden", "true");
+        btn.appendChild(img);
+      }
+
+      const label = document.createElement("span");
+      label.textContent = state.title;
+      btn.appendChild(label);
+
+      if (state.id === focusedId) btn.classList.add("is-active");
+
+      const handleClick = () => {
+        if (state.isMinimized) {
+          document.dispatchEvent(
+            new CustomEvent("xp:restore", { detail: { id: state.id } }),
+          );
+        } else if (state.id === focusedId) {
+          document.dispatchEvent(
+            new CustomEvent("xp:minimize", { detail: { id: state.id } }),
+          );
+        } else {
+          document.dispatchEvent(
+            new CustomEvent("xp:focus", { detail: { id: state.id } }),
+          );
+        }
+      };
+
+      btn.addEventListener("click", handleClick);
+      btn.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter" || ev.key === " ") handleClick();
+      });
+
+      windowsEl.appendChild(btn);
+    });
+  });
+</script>

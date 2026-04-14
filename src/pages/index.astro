@@ -2,92 +2,34 @@
 export const prerender = true;
 
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Desktop from "../components/Desktop.astro";
+import DesktopShell from "../shells/desktop/DesktopShell.astro";
+import IpodShell from "../shells/ipod/IpodShell.astro";
 ---
 
 <BaseLayout>
-  <Desktop />
+  <DesktopShell />
+  <IpodShell />
 </BaseLayout>
 
 <script>
-  import { appHost } from "../apps/host";
-  import { apps } from "../apps/registry";
-  import { windowManager } from "../lib/windowManager";
-  import { launch } from "../shell/launcher";
-  import { initClippy } from "../lib/clippy/clippy";
+  /*
+   * Shell chooser — reads the `data-shell` value set by the synchronous
+   * detection script in BaseLayout head, removes the losing shell's DOM,
+   * and dynamically imports only the winning shell's bootstrap.
+   *
+   * The inline <style> in BaseLayout already hides the losing shell
+   * visually, so this block is purely about (a) not leaving dead DOM
+   * and (b) not downloading the unused shell's JS.
+   */
+  const shell = document.documentElement.dataset.shell;
 
-  document.addEventListener("DOMContentLoaded", () => {
-    // Wire the app content lifecycle.
-    appHost.init(apps);
-
-    // Clippy assistant
-    initClippy();
-
-    // Shell launcher entry point — every opening action flows through here.
-    document.addEventListener("xp:launch", (e) => {
-      const detail = (
-        e as CustomEvent<{
-          appId?: string;
-          path?: string;
-          args?: Record<string, unknown>;
-        }>
-      ).detail;
-      void launch(detail);
-    });
-
-    // Window manager event routing (instance-id keyed).
-    // Note: xp:close is handled by appHost, which calls windowManager.destroy.
-    document.addEventListener("xp:minimize", (e) =>
-      windowManager.minimize((e as CustomEvent).detail.id),
-    );
-    document.addEventListener("xp:maximize", (e) =>
-      windowManager.maximize((e as CustomEvent).detail.id),
-    );
-    document.addEventListener("xp:restore", (e) =>
-      windowManager.restore((e as CustomEvent).detail.id),
-    );
-    document.addEventListener("xp:focus", (e) =>
-      windowManager.focus((e as CustomEvent).detail.id),
-    );
-
-    // Title-bar button delegation (previously lived inside Window.astro).
-    document.addEventListener("click", (e) => {
-      const btn = (e.target as Element).closest<HTMLElement>(
-        "[data-action][data-window-target]",
-      );
-      if (!btn) return;
-      const action = btn.dataset.action as string;
-      const id = btn.dataset.windowTarget as string;
-      document.dispatchEvent(
-        new CustomEvent(`xp:${action}`, { detail: { id } }),
-      );
-    });
-
-    // Double-click title bar → toggle maximize (only for resizable windows).
-    document.addEventListener("dblclick", (e) => {
-      const titleBar = (e.target as Element).closest<HTMLElement>(".title-bar");
-      if (!titleBar) return;
-      if ((e.target as Element).closest(".title-bar-controls")) return;
-      if ((e.target as Element).closest(".title-bar-icon")) return;
-      const win = titleBar.closest<HTMLElement>("[data-window-id]");
-      if (!win) return;
-      if (win.dataset.resizable === "false") return;
-      const id = win.dataset.windowId!;
-      document.dispatchEvent(
-        new CustomEvent("xp:maximize", { detail: { id } }),
-      );
-    });
-
-    // Open About Me on startup, centered on screen.
-    const desktop = document.getElementById("desktop-area");
-    const dw = desktop?.clientWidth ?? window.innerWidth;
-    const dh = desktop?.clientHeight ?? window.innerHeight;
-    void launch({
-      path: "/Desktop/About Me.md",
-      args: {
-        x: Math.round((dw - 560) / 2),
-        y: Math.round((dh - 440) / 2),
-      },
-    });
-  });
+  if (shell === "ipod") {
+    document.getElementById("desktop-shell")?.remove();
+    const { mount } = await import("../shells/ipod/bootstrap");
+    mount();
+  } else {
+    document.getElementById("ipod-shell")?.remove();
+    const { mount } = await import("../shells/desktop/bootstrap");
+    mount();
+  }
 </script>

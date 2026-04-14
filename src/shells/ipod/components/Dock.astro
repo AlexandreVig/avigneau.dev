@@ -1,0 +1,91 @@
+---
+/**
+ * Pinned dock — 4 app slots at the bottom of the home screen.
+ *
+ * Reads the iPod registry, keeps `location === 'dock'`, sorts by `order`.
+ * Labels are hidden here to match iOS 1's dock styling.
+ */
+import { ipodApps } from "../apps/registry";
+import AppIcon from "./AppIcon.astro";
+
+const dockApps = ipodApps
+  .filter((a) => a.location === "dock")
+  .sort((a, b) => a.order - b.order);
+---
+
+<div class="ipod-dock">
+  {
+    dockApps.map((app) => (
+      <AppIcon id={app.id} title={app.title} titleKey={app.titleKey} icon={app.icon} hideLabel />
+    ))
+  }
+</div>
+<div class="ipod-labels">
+  {
+    dockApps.map((app) => (
+      <span class="ipod-label" data-label-for={app.id} data-i18n={app.titleKey}>
+        {app.title}
+      </span>
+    ))
+  }
+</div>
+
+<style>
+  .ipod-dock {
+    /* Establishes the positioning context for the ::before / ::after
+       border strips below. Without this they'd resolve against the
+       nearest positioned ancestor (#ipod-shell) and any future padding
+       or wrapper change would silently shift them off the dock. */
+    position: relative;
+    flex-shrink: 0;
+    height: 76px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
+    padding: 0 13px;
+    margin: 0 3px;
+    background: url("/ipod/dock-grid.png") repeat-x center;
+  }
+
+  /* Left and right vertical border strips that frame the dock well.
+     dock-border.png is natively 3x76 — same size as the dock itself —
+     so the pseudo is sized explicitly to match and the image renders
+     at its natural dimensions with no scaling or repetition. */
+  .ipod-dock::before,
+  .ipod-dock::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 3px;
+    height: 76px;
+    background: url("/ipod/dock-border.png") center;
+    pointer-events: none;
+  }
+  .ipod-dock::before {
+    left: -3px;
+  }
+  .ipod-dock::after {
+    right: -3px;
+  }
+
+  .ipod-labels {
+    height: 15px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-items: center;
+    padding: 0 16px;
+    background: #6e6e6e;
+  }
+
+  .ipod-labels span {
+    font-size: 11px;
+    line-height: 1;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    max-width: 72px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+</style>

@@ -1,0 +1,157 @@
+/*
+ * iPod Touch 1G shell — global styles.
+ *
+ * Scoped under `#ipod-shell` so nothing leaks onto the desktop shell when
+ * both are rendered side-by-side during SSR. The chooser in BaseLayout
+ * removes the losing shell's DOM on load, but these rules are defensive.
+ *
+ * Step 5 will replace the placeholder background with a real iOS 1
+ * wallpaper and add the status bar / home grid / dock layout.
+ */
+
+#ipod-shell {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  overflow: hidden;
+  cursor: auto;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  /* Kill the 300ms synthetic click delay on mobile Safari — tapping
+     should feel instant. Overridden per-element where the default
+     (manipulation) interferes (e.g. calculator keys need fast-tap too,
+     which manipulation already provides). */
+  touch-action: manipulation;
+}
+
+/*
+ * Let form controls behave normally — the shell-wide `user-select: none`
+ * above kills text selection, which would make the Mail compose form
+ * unusable otherwise.
+ */
+#ipod-shell input,
+#ipod-shell textarea {
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
+/*
+ * Safe-area padding for notched phones. Reserves the top/bottom/side
+ * insets so nothing lands under the notch, home indicator, or rounded
+ * display corners — matters in portrait AND landscape on iPhone X+.
+ */
+#ipod-shell {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/*
+ * ---------------------------------------------------------------------------
+ * AppFrame — fullscreen chrome an iPod app lives inside.
+ *
+ * Positioned absolutely over the home screen, sliding up from the bottom on
+ * enter and back down on exit. Sits below the status bar (top: 20px) so the
+ * iOS 1 status bar stays visible at all times, matching the real device.
+ *
+ * Keep the transition duration in sync with SLIDE_MS in lib/appFrame.ts.
+ * ---------------------------------------------------------------------------
+ */
+
+#ipod-shell .ipod-app-frame {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20px; /* below the status bar */
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: #000;
+  transform: translateY(0);
+  transition: transform 280ms ease-out;
+  /* Above the home screen but below the status bar (which is a flex sibling
+     and therefore in normal flow, so no z-index fight is possible). */
+  z-index: 10;
+  will-change: transform;
+}
+
+#ipod-shell .ipod-app-frame.entering,
+#ipod-shell .ipod-app-frame.exiting {
+  transform: translateY(100%);
+}
+
+#ipod-shell .ipod-nav-bar {
+  flex-shrink: 0;
+  position: relative;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    #7a93b5 0%,
+    #4c6a90 50%,
+    #3a587e 100%
+  );
+  border-bottom: 1px solid #1a2a3f;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+#ipod-shell .ipod-nav-bar .title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+#ipod-shell .ipod-nav-bar .back {
+  position: absolute;
+  left: 6px;
+  top: 5px;
+  height: 34px;
+  min-width: 60px;
+  padding: 0 12px 0 18px;
+  appearance: none;
+  border: none;
+  /*
+   * The iOS 1 back button is a rectangle with a left-pointing arrow notch
+   * and a thin dark border following that exact silhouette. `clip-path`
+   * can't pull that off — it clips the border away and kills rounded
+   * corners. Instead we bake the whole shape (gradient fill + stroke +
+   * right-side corner radii) into a stretchy inline SVG background.
+   * `preserveAspectRatio='none'` lets the middle stretch with the button
+   * width while the arrow tip and rounded right corners stay intact.
+   */
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 34' preserveAspectRatio='none'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='%238ca5c6'/><stop offset='0.5' stop-color='%235878a0'/><stop offset='1' stop-color='%23415f85'/></linearGradient></defs><path d='M1 17 L8.5 1 L56 1 Q59 1 59 4 L59 30 Q59 33 56 33 L8.5 33 Z' fill='url(%23g)' stroke='%231a2a3f' stroke-width='1' stroke-linejoin='round'/></svg>")
+    no-repeat center / 100% 100%;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+#ipod-shell .ipod-nav-bar .back:active {
+  filter: brightness(0.85);
+}
+
+#ipod-shell .ipod-app-root {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+}
