@@ -1,4 +1,4 @@
-import { launch } from '../../lib/launcher';
+import { openAbout } from '../about/launch';
 import { t } from '../../../../i18n';
 import type { AppModule } from '../types';
 import { createMenu } from './menu';
@@ -46,18 +46,14 @@ const mod: AppModule = {
               statusBar.hidden = !statusBarVisible;
               break;
             case 'about':
-              void launch({
-                appId: 'about',
-                args: {
-                  path: 'about:notepad',
-                  icon: '/icons/notepad.png',
-                  appIcon: '/icons/notepad.png',
-                  appTitle: 'Notepad',
-                  version: 'Version 1.0',
-                  copyright: '© 2026 Alexandre Vigneau',
-                  description: t('notepad.about.description'),
-                  footer: t('notepad.about.footer'),
-                },
+              openAbout('notepad', {
+                icon: '/icons/notepad.png',
+                appIcon: '/icons/notepad.png',
+                appTitle: 'Notepad',
+                version: 'Version 1.0',
+                copyright: '© 2026 Alexandre Vigneau',
+                description: t('notepad.about.description'),
+                footer: t('notepad.about.footer'),
               });
               break;
           }

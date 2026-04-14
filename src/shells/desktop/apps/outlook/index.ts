@@ -4,6 +4,7 @@ import type { FolderId } from './types';
 import { getFolders, getEmails, contacts } from './data';
 import { createMenu } from './menu';
 import { launch } from '../../lib/launcher';
+import { openAbout } from '../about/launch';
 import { t, getLocale } from '../../../../i18n';
 import './outlook.css';
 
@@ -102,17 +103,13 @@ const mod: AppModule = {
             else if (action === 'new-mail') openCompose();
             else if (action === 'refresh') render();
             else if (action === 'about') {
-              void launch({
-                appId: 'about',
-                args: {
-                  path: 'about:outlook',
-                  icon: '/icons/outlook.png',
-                  appIcon: '/icons/outlook.png',
-                  appTitle: 'Outlook Express',
-                  version: 'Version 6.0',
-                  copyright: '\u00a9 2026 Alexandre Vigneau',
-                  description: t('outlook.about.description'),
-                },
+              openAbout('outlook', {
+                icon: '/icons/outlook.png',
+                appIcon: '/icons/outlook.png',
+                appTitle: 'Outlook Express',
+                version: 'Version 6.0',
+                copyright: '\u00a9 2026 Alexandre Vigneau',
+                description: t('outlook.about.description'),
               });
             }
           },

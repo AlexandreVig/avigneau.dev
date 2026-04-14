@@ -1,7 +1,7 @@
 import type { AppModule } from '../types';
 import './minesweeper.css';
 
-import { launch } from '../../lib/launcher';
+import { openAbout } from '../about/launch';
 import { createMenu } from './menu';
 import { t } from '../../../../i18n';
 import {
@@ -86,18 +86,14 @@ const mod: AppModule = {
           if (action === 'new') reset();
           else if (action === 'exit') host.close();
           else if (action === 'about') {
-            void launch({
-              appId: 'about',
-              args: {
-                path: 'about:minesweeper',
-                icon: minesweeperIconUrl,
-                appIcon: minesweeperIconUrl,
-                appTitle: 'Minesweeper',
-                version: 'Version 1.0',
-                copyright: '© 2026 Alexandre Vigneau',
-                description: t('minesweeper.about.description'),
-                footer: t('minesweeper.about.footer'),
-              },
+            openAbout('minesweeper', {
+              icon: minesweeperIconUrl,
+              appIcon: minesweeperIconUrl,
+              appTitle: 'Minesweeper',
+              version: 'Version 1.0',
+              copyright: '© 2026 Alexandre Vigneau',
+              description: t('minesweeper.about.description'),
+              footer: t('minesweeper.about.footer'),
             });
           } else if (action.startsWith('difficulty:')) {
             const next = action.slice('difficulty:'.length) as Difficulty;

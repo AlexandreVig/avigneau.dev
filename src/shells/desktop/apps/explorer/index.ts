@@ -1,6 +1,7 @@
 import { iconForNode, listChildren, parentPath, pathOf, resolve } from '../../fs/api';
 import type { FsNode } from '../../fs/types';
 import { launch } from '../../lib/launcher';
+import { openAbout } from '../about/launch';
 import { t } from '../../../../i18n';
 import type { AppModule } from '../types';
 import { explorerInstances } from './instances';
@@ -80,18 +81,14 @@ const mod: AppModule = {
             if (action === 'exit') host.close();
             else if (action === 'refresh') render();
             else if (action === 'about-windows') {
-              void launch({
-                appId: 'about',
-                args: {
-                  path: 'about:explorer',
-                  icon: '/icons/my-computer.png',
-                  appIcon: '/icons/my-computer.png',
-                  appTitle: 'Windows Explorer',
-                  version: 'Version 1.0',
-                  copyright: '\u00a9 2026 Alexandre Vigneau',
-                  description: t('explorer.about.description'),
-                  footer: t('explorer.about.footer'),
-                },
+              openAbout('explorer', {
+                icon: '/icons/my-computer.png',
+                appIcon: '/icons/my-computer.png',
+                appTitle: 'Windows Explorer',
+                version: 'Version 1.0',
+                copyright: '\u00a9 2026 Alexandre Vigneau',
+                description: t('explorer.about.description'),
+                footer: t('explorer.about.footer'),
               });
             }
           },

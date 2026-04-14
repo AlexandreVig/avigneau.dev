@@ -1,6 +1,6 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
-import { launch } from '../../lib/launcher';
+import { openAbout } from '../about/launch';
 import type { AppModule, AppInstance } from '../types';
 import { createMenu } from './menu';
 import { createToolbar } from './toolbar';
@@ -93,18 +93,14 @@ const mod: AppModule = {
             toolbarControls.onZoomOut();
             break;
           case 'about':
-            void launch({
-              appId: 'about',
-              args: {
-                path: 'about:adobe-reader',
-                icon: '/icons/adobe-reader.png',
-                appIcon: '/icons/adobe-reader.png',
-                appTitle: 'Adobe Reader',
-                version: 'Version 7.0',
-                copyright: '\u00a9 2026 Alexandre Vigneau',
-                description: t('reader.about.description'),
-                footer: t('reader.about.footer'),
-              },
+            openAbout('adobe-reader', {
+              icon: '/icons/adobe-reader.png',
+              appIcon: '/icons/adobe-reader.png',
+              appTitle: 'Adobe Reader',
+              version: 'Version 7.0',
+              copyright: '\u00a9 2026 Alexandre Vigneau',
+              description: t('reader.about.description'),
+              footer: t('reader.about.footer'),
             });
             break;
         }
