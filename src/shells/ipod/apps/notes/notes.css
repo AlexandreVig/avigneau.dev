@@ -141,3 +141,27 @@
 .ipod-notes__back:active {
   filter: brightness(0.92);
 }
+
+.ipod-notes__body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+}
+
+.ipod-notes__body th,
+.ipod-notes__body td {
+  border: 1px solid #c4a868;
+  padding: 5px 8px;
+  text-align: left;
+}
+
+.ipod-notes__body th {
+  background: #f5e98a;
+  font-weight: 600;
+}
+
+.ipod-notes__body tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.4);
+}

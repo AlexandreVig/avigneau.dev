@@ -9,7 +9,7 @@
 
 import { escapeHtml } from '../../../../core/html';
 import type { IpodAppModule } from '../types';
-import { renderMarkdown } from '../../../../core/markdown';
+import { renderMarkdown, renderMermaidIn } from '../../../../core/markdown';
 import { PROJECTS, type Project } from './projects';
 import { t } from '../../../../i18n';
 import './safari.css';
@@ -90,6 +90,7 @@ const mod: IpodAppModule = {
         const html = await renderMarkdown(source);
         if (signal.aborted) return;
         viewport.innerHTML = `<article class="ipod-safari__page">${html}</article>`;
+        void renderMermaidIn(viewport);
         viewport.scrollTop = 0;
       } catch (err) {
         if (signal.aborted) return;

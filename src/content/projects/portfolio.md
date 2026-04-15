@@ -16,10 +16,10 @@ script in `<head>` reads the viewport before the first paint and sets a
 `data-shell` attribute. CSS instantly hides the losing shell. A module script
 then removes its DOM and lazy-imports only the winning shell's JavaScript.
 
-```
-Desktop (≥ 769 px wide)  →  Windows XP shell
-Mobile  (≤ 768 px / touch)  →  iPod Touch 1G shell
-```
+| Viewport | Shell |
+|---|---|
+| ≥ 769 px wide | Windows XP |
+| ≤ 768 px / touch | iPod Touch 1G |
 
 Neither shell's code is downloaded unless the device actually needs it.
 The detection lives in two places that must stay in sync: the inline `<script>`

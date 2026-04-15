@@ -10,7 +10,7 @@
 
 import { escapeHtml } from '../../../../core/html';
 import type { IpodAppModule } from '../types';
-import { renderMarkdown } from '../../../../core/markdown';
+import { renderMarkdown, renderMermaidIn } from '../../../../core/markdown';
 import { NOTES, type Note } from './notes-list';
 import { t } from '../../../../i18n';
 import './notes.css';
@@ -79,6 +79,7 @@ const mod: IpodAppModule = {
         // so a leading "# About Me" would be a duplicate.
         const trimmed = source.replace(/^#\s+.*\n+/, '');
         body.innerHTML = await renderMarkdown(trimmed);
+        void renderMermaidIn(body);
       } catch (err) {
         if (signal.aborted) return;
         console.error(`[ipod/notes] failed to load "${note.id}"`, err);

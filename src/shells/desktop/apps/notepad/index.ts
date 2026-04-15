@@ -3,7 +3,7 @@ import { t } from '../../../../i18n';
 import type { AppModule } from '../types';
 import { createMenu } from './menu';
 import { escapeHtml } from '../../../../core/html';
-import { renderMarkdown } from '../../../../core/markdown';
+import { renderMarkdown, renderMermaidIn } from '../../../../core/markdown';
 import './notepad.css';
 
 const mod: AppModule = {
@@ -79,8 +79,12 @@ const mod: AppModule = {
     host.setTitle(`${file.name} — Notepad`);
 
     const source = await file.read();
-    body.innerHTML =
-      file.ext === '.md' ? await renderMarkdown(source) : `<pre>${escapeHtml(source)}</pre>`;
+    if (file.ext === '.md') {
+      body.innerHTML = await renderMarkdown(source);
+      void renderMermaidIn(body);
+    } else {
+      body.innerHTML = `<pre>${escapeHtml(source)}</pre>`;
+    }
 
     const lines = source.split('\n').length;
     statusBar.textContent = `${file.path}    Ln ${lines}, Col 1`;

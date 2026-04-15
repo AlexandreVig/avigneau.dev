@@ -216,9 +216,6 @@ const en = {
   'ipod.safari.bookmarks': 'Bookmarks',
   'ipod.safari.errorTitle': "Safari can't open the page.",
   'ipod.safari.errorBody': 'The server stopped responding.',
-  'ipod.safari.project.portfolio.title': 'Portfolio Website',
-  'ipod.safari.project.portfolio.description':
-    'This site \u2014 a Windows XP desktop shell in the browser.',
 
   'ipod.notes.back': '\u2039 Notes',
   'ipod.notes.items.about.title': 'About Me',

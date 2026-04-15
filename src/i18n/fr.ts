@@ -220,9 +220,6 @@ const fr: Record<I18nKey, string> = {
   'ipod.safari.bookmarks': 'Signets',
   'ipod.safari.errorTitle': 'Safari ne peut pas ouvrir la page.',
   'ipod.safari.errorBody': 'Le serveur ne r\u00e9pond plus.',
-  'ipod.safari.project.portfolio.title': 'Site portfolio',
-  'ipod.safari.project.portfolio.description':
-    'Ce site \u2014 un bureau Windows XP dans le navigateur.',
 
   'ipod.notes.back': '\u2039 Notes',
   'ipod.notes.items.about.title': '\u00c0 propos',

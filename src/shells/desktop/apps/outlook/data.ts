@@ -11,7 +11,11 @@ export function getFolders(): Folder[] {
     },
     { id: 'outbox', name: t('outlook.folder.outbox'), icon: '/icons/outlook/folder-outbox.webp' },
     { id: 'sent', name: t('outlook.folder.sent'), icon: '/icons/outlook/folder-sent.webp' },
-    { id: 'deleted', name: t('outlook.folder.deleted'), icon: '/icons/outlook/folder-deleted.webp' },
+    {
+      id: 'deleted',
+      name: t('outlook.folder.deleted'),
+      icon: '/icons/outlook/folder-deleted.webp',
+    },
     { id: 'drafts', name: t('outlook.folder.drafts'), icon: '/icons/outlook/folder-drafts.webp' },
   ];
 }

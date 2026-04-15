@@ -14,7 +14,7 @@
  * The Bookmarks list picks up the new entry automatically.
  */
 
-import { t } from '../../../../i18n';
+import { getLocale } from '../../../../i18n';
 
 export interface Project {
   /** Stable id used for DOM hooks and row lookup. */
@@ -36,9 +36,28 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: 'portfolio',
-    title: t('ipod.safari.project.portfolio.title'),
-    description: t('ipod.safari.project.portfolio.description'),
+    title: getLocale() === 'fr' ? 'Site portfolio' : 'Portfolio Website',
+    description:
+      getLocale() === 'fr'
+        ? 'Ce site \u2014 un portfolio retro.'
+        : 'This site \u2014 a retro portfolio.',
     url: 'alexandre.dev/projects/portfolio',
-    load: () => import('../../../../content/projects/portfolio.md?raw').then((m) => m.default),
+    load: () =>
+      getLocale() === 'fr'
+        ? import('../../../../content/fr/projects/portfolio.md?raw').then((m) => m.default)
+        : import('../../../../content/projects/portfolio.md?raw').then((m) => m.default),
+  },
+  {
+    id: 'myvpn',
+    title: getLocale() === 'fr' ? 'Mon VPN' : 'MyVPN',
+    description:
+      getLocale() === 'fr'
+        ? 'Une reimplémentation de WireGuard en Python.'
+        : 'A WireGuard reimplementation in Python.',
+    url: 'alexandre.dev/projects/myvpn',
+    load: () =>
+      getLocale() === 'fr'
+        ? import('../../../../content/fr/projects/myvpn.md?raw').then((m) => m.default)
+        : import('../../../../content/projects/myvpn.md?raw').then((m) => m.default),
   },
 ];

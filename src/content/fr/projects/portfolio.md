@@ -18,10 +18,10 @@ pose un attribut `data-shell`. Le CSS cache immédiatement le shell perdant. Un
 script module supprime ensuite son DOM et charge dynamiquement uniquement le
 bootstrap du shell gagnant.
 
-```
-Bureau (≥ 769 px de large)   →  shell Windows XP
-Mobile (≤ 768 px / tactile)  →  shell iPod Touch 1G
-```
+| Écran | Shell |
+|---|---|
+| ≥ 769 px de large | Windows XP |
+| ≤ 768 px / tactile | iPod Touch 1G |
 
 Le code du shell inutilisé n'est jamais téléchargé.
 La détection vit à deux endroits qui doivent rester synchronisés : le `<script>`

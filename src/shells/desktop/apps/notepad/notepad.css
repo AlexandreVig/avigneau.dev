@@ -102,6 +102,29 @@
   margin: 1em 0;
 }
 
+.notepad__body table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.8em 0;
+  font-size: 0.95em;
+}
+
+.notepad__body th,
+.notepad__body td {
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  text-align: left;
+}
+
+.notepad__body th {
+  background: #ece9d8;
+  font-weight: 600;
+}
+
+.notepad__body tr:nth-child(even) td {
+  background: #f9f8f4;
+}
+
 .notepad__empty {
   padding: 24px;
   color: #666;

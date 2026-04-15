@@ -127,6 +127,15 @@ export const root: FolderNode = {
                   ? import('../../../content/fr/projects/portfolio.md?raw').then((m) => m.default)
                   : import('../../../content/projects/portfolio.md?raw').then((m) => m.default),
             },
+            {
+              kind: 'file',
+              name: 'MyVPN.md',
+              ext: '.md',
+              load: () =>
+                getLocale() === 'fr'
+                  ? import('../../../content/fr/projects/myvpn.md?raw').then((m) => m.default)
+                  : import('../../../content/projects/myvpn.md?raw').then((m) => m.default),
+            },
           ],
         },
         {
