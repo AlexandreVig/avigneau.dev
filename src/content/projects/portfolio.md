@@ -1,36 +1,41 @@
 # Portfolio Website
 
-The site you're looking at. A Windows XP–themed portfolio built as a tiny
-desktop shell — a virtual file system, a window manager, and a shell launcher,
-all running in the browser with no framework state management.
+The site you're looking at. Open it on a desktop and you get a Windows XP
+environment — draggable windows, a taskbar, a start menu, and Clippy. Open it
+on a phone and you get a first-generation iPod Touch. Same URL, two completely
+different UIs, zero frameworks.
 
-## Stack
+Built with Astro, plain TypeScript, plain CSS, and deployed on Cloudflare Pages.
 
-- **Astro** for the static shell
-- **TypeScript** throughout
-- **Plain CSS** with CSS variables for theming
-- **Cloudflare Pages** for hosting
+---
 
-The app ships as a fully static site — no server, no hydration framework. Everything
-that feels "dynamic" (windows, file system, apps) is vanilla DOM and TypeScript
-loaded on-demand via Vite's code splitting.
+## The core idea: one page, two shells
 
-## Virtual file system
+Both shells are server-rendered into the same HTML document. A synchronous
+script in `<head>` reads the viewport before the first paint and sets a
+`data-shell` attribute. CSS instantly hides the losing shell. A module script
+then removes its DOM and lazy-imports only the winning shell's JavaScript.
 
-Content lives in a declarative tree. Each `FileNode` holds a lazy `load()` —
-Vite code-splits each file into its own chunk, so only the content you actually
-open gets fetched.
+```
+Desktop (≥ 769 px wide)  →  Windows XP shell
+Mobile  (≤ 768 px / touch)  →  iPod Touch 1G shell
+```
+
+Neither shell's code is downloaded unless the device actually needs it.
+The detection lives in two places that must stay in sync: the inline `<script>`
+in `BaseLayout.astro` (runs before paint) and the module chooser in
+`index.astro` (removes dead DOM, imports the right bootstrap).
+
+---
+
+## Content layer: virtual file system
+
+All content — markdown files, PDFs, project write-ups — lives in a declarative
+tree shared by both shells. Each file node carries a lazy `load()` function.
+Vite turns every `import(…?raw)` into its own chunk, so a file's content is
+only fetched when a user actually opens it.
 
 ```ts
-export interface FileNode {
-  kind: 'file';
-  name: string;
-  ext: string;
-  // Only fetched when the file is opened.
-  load: () => Promise<string>;
-}
-
-// Example entry in tree.ts:
 {
   kind: 'file',
   name: 'About Me.md',
@@ -39,85 +44,168 @@ export interface FileNode {
 }
 ```
 
-The tree also has `FolderNode` and `ShortcutNode`. Shortcuts resolve to an app
-launch rather than a file — used for desktop icons like "My Computer".
+The tree has three node kinds: `FileNode`, `FolderNode`, and `ShortcutNode`.
+Shortcuts resolve to an app launch instead of a file — used for desktop icons
+like "My Computer".
 
-## Shell launcher
+---
 
-Every open action — desktop icon double-click, start menu, explorer — routes
-through a single `launch()` call. It resolves the path, determines the right app
-from the file extension, and hands off to `appHost`.
+## Desktop shell — Windows XP
 
-```ts
-export async function launch(req: LaunchRequest): Promise<void> {
-  let file: FileHandle | null = null;
+### Window manager
 
-  if (req.path) {
-    const node = resolve(req.path);
-    if (node?.kind === "file") {
-      file = await readFile(req.path);
-    }
-  }
+Windows are plain `<div>` nodes appended to `#desktop`. The manager tracks
+position, z-index, and minimized/maximized state entirely in vanilla DOM.
 
-  const appId = req.appId ?? (file ? getFileType(file.ext).defaultAppId : null);
-  await appHost.launch({ appId, file, args: req.args });
-}
-```
-
-## App host
-
-`AppHost` manages the full app lifecycle: dynamic import, instance deduplication,
-focus routing, and teardown. Apps register as `AppManifest` entries with a `kind`:
-
-- `singleton` — at most one instance
-- `multi` — new window every time (Explorer)
-- `document` — one instance per file path (Notepad)
-
-When you open the same file twice, `AppHost` focuses the existing window instead
-of mounting a second copy. The instance key is derived from the file path:
+Drag is handled by recording the pointer offset on `mousedown` on the title
+bar, then tracking deltas on `window`. A transparent cover div is injected
+during the drag to prevent iframes or rich content from swallowing mouse
+events mid-move. New windows cascade automatically: each one opens 30 px
+below and to the right of the previous, cycling after 8.
 
 ```ts
-private computeInstanceId(manifest, file, args): string {
-  if (manifest.kind === 'singleton') return manifest.id;
-  if (manifest.kind === 'multi')     return `${manifest.id}#${++this.multiCounter}`;
-  // document: keyed by the file path, so the same file always maps
-  // to the same window — opening it again just focuses it.
-  return `${manifest.id}:${file?.path ?? args?.path}`;
-}
-```
-
-## Window manager
-
-Windows are plain DOM nodes appended to `#desktop`. The manager tracks position,
-z-index, and minimized/maximized state, and wires drag and edge-resize interactions
-without any external library.
-
-Drag works by recording the mouse position on `title-bar` mousedown, then tracking
-deltas on `window`. A transparent cover div is injected over the desktop during the
-drag to prevent iframe-like content from swallowing mouse events mid-drag.
-
-```ts
-el.addEventListener("mousedown", (e) => {
-  const titleBar = (e.target as Element).closest(".title-bar");
+el.addEventListener('mousedown', (e) => {
+  const titleBar = (e.target as Element).closest('.title-bar');
   if (titleBar && !isButton && !state.isMaximized) {
     isDragging = true;
     document.body.appendChild(cover); // swallow-proof overlay
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
   }
 });
 ```
 
-Cascade placement is automatic — each new window opens 30px below and to the
-right of the previous one, cycling after 8.
+### App host and lifecycle
 
-## Code splitting
+Every app is a dynamic import. Apps declare a `kind` that controls how many
+instances can exist:
 
-Every app and every content file is a separate dynamic import. On first load the
-browser fetches only the shell HTML, the desktop CSS, and the entrypoint script.
-Opening Notepad fetches the notepad chunk. Opening a markdown file fetches that
-file's content chunk. The explorer and the markdown renderer each live in their
-own chunk too — nothing loads until you ask for it.
+- **singleton** — at most one instance (Outlook Express, Minesweeper)
+- **multi** — new window on every launch (Explorer, Outlook Compose)
+- **document** — one instance per file path, re-focused if already open (Notepad, Adobe Reader)
+
+When you try to open the same document twice, `AppHost` focuses the existing
+window instead of mounting a second copy. Explorer adds a `findExistingInstance`
+override that deduplicates by the folder currently displayed, not the one it
+was originally opened at.
+
+### Built-in apps
+
+| App | What it does |
+|---|---|
+| **Explorer** | Browse the virtual file system |
+| **Notepad** | Render `.md` and `.txt` files |
+| **Adobe Reader** | Render `.pdf` content |
+| **Outlook Express** | Inbox view |
+| **Outlook Compose** | Contact form backed by the edge API |
+| **Minesweeper** | Fully playable, with a custom LED digit display |
+| **BSOD** | Triggered by `.exe` files |
+| **About** | Per-app dialog (close button only, no taskbar entry) |
+
+All eight apps ship as separate chunks — none are downloaded until opened.
+
+### Clippy
+
+Clippy is an autonomous agent layered on top of the desktop. It has three
+independent subsystems running at once:
+
+**AnimationEngine** — drives a sprite sheet at 15 fps using a JSON animation
+table. It distinguishes locked animations (cannot be interrupted), look
+animations (cursor-facing), and the idle default.
+
+**MovementController** — Clippy wanders the desktop on its own, picking a
+random target within a 350 px radius every 3–6 seconds and CSS-transitioning
+to it. Dragging pauses autonomy; releasing resumes it. On arrival it plays a
+short reaction animation.
+
+**Event reactions** — Clippy listens to custom DOM events dispatched by the
+app host and reacts accordingly:
+
+| Event | Clippy does |
+|---|---|
+| Open Notepad | `Writing` animation |
+| Open Minesweeper | `GetTechy` |
+| Close any window | `Wave` or `GoodBye` |
+| Win Minesweeper | `Congratulate` |
+| 2 min of inactivity | `IdleSnooze` |
+
+Cursor tracking (throttled to 200 ms) makes Clippy face the mouse whenever
+it's in its default state.
+
+---
+
+## Mobile shell — iPod Touch 1G
+
+### Navigator
+
+The iPod shell replaces the window manager with a linear navigation stack.
+There is exactly one visible screen at a time — home or one open app.
+
+`openApp()` creates a full-screen frame, dynamic-imports the app module, and
+starts the slide-up animation in parallel so the frame is already on-screen
+by the time the app's `mount()` runs. An `AbortController` is passed to every
+app and signalled on `goHome()`, giving apps a clean cancellation hook.
+Re-entrancy during an in-flight animation is silently ignored, matching the
+behaviour of the original iOS 1.
+
+```ts
+// Start animation and load module in parallel.
+const entered = frame.playEnter();
+const module = await manifest.loader(); // own Vite chunk
+
+await module.default.mount({ root, instanceId, signal: abort.signal, host });
+await entered; // frame is now fully on-screen
+```
+
+### Apps
+
+The home screen mirrors the original iPod Touch layout: a 4-column icon grid
+above a pinned dock of four apps.
+
+| App | Location | What it does |
+|---|---|---|
+| **Safari** | Dock | Project browser |
+| **Mail** | Dock | Contact form |
+| **Notes** | Dock | Markdown content viewer |
+| **Music** | Dock | Music player |
+| **Calculator** | Home grid | Functional calculator |
+| **Weather / Stocks / Maps / YouTube** | Home grid | "Cannot connect to server" decorative callbacks |
+
+---
+
+## Shared systems
+
+### i18n
+
+All UI strings go through a typed `t(key, ...args)` helper backed by flat EN
+and FR dictionaries. Keys are typed as a union derived from the English map, so
+a missing translation is a compile error. The locale is detected from
+`navigator.language` on first visit and saved to `localStorage`; switching
+reloads the page.
+
+```ts
+t('explorer.itemCount', 3) // → "3 items" or "3 éléments"
+```
+
+### Contact API
+
+The Outlook Compose and Mail apps post to `/api/contact`, a Cloudflare Pages
+Function (the only non-static route in the project). It:
+
+1. Rate-limits by IP via a Cloudflare Rate Limiter binding
+2. Validates every field and checks a honeypot
+3. Sends the message via the Resend API
+
+---
+
+## What the browser downloads on first load
+
+On a cold visit the browser receives only the page HTML, the active shell's
+CSS, and one small entrypoint script. Everything else — app modules, content
+files, the markdown renderer, Clippy's sprite sheet — is fetched on demand.
+The unused shell's entire JS bundle is never downloaded at all.
+
+---
 
 ## Source
 
