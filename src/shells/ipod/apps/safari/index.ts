@@ -65,7 +65,18 @@ const mod: IpodAppModule = {
       'click',
       () => {
         destroyActiveViewer();
+
+        // iOS Safari can fail to repaint a `-webkit-overflow-scrolling: touch`
+        // container if we swap its contents while momentum scrolling.
+        viewport.style.setProperty('-webkit-overflow-scrolling', 'auto');
+        void viewport.offsetHeight;
+
         renderList();
+
+        requestAnimationFrame(() => {
+          viewport.style.setProperty('-webkit-overflow-scrolling', 'touch');
+          viewport.scrollTop = 0;
+        });
       },
       { signal },
     );
@@ -76,7 +87,6 @@ const mod: IpodAppModule = {
       urlEl.textContent = t('ipod.safari.bookmarks');
       navBack.hidden = true;
       downloadBtn.hidden = true;
-      viewport.scrollTop = 0;
       viewport.innerHTML = `
         <ul class="ipod-safari__bookmarks">
           ${PROJECTS.map(
@@ -95,6 +105,7 @@ const mod: IpodAppModule = {
           ).join('')}
         </ul>
       `;
+      viewport.scrollTop = 0;
 
       const list = viewport.querySelector<HTMLElement>('.ipod-safari__bookmarks')!;
       list.addEventListener(
